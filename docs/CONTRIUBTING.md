@@ -1,0 +1,145 @@
+# Contributing example
+
+The logic for this backend project is contained in `/src` directory. Code is split into modules. Every module has it's own set of tests.
+On the `/src` level the following directory structure shall be used:
+
+
+| Directory         | Description                                              |
+| ----------------- | -------------------------------------------------------- |
+| config            | Configuration of environment, enums, error messages etc. |
+| migration-scripts | Database migration files. (migration and seed filesF).   |
+| modules           | Modules - each module is a set of functionality.         |
+
+
+Directory structure for modules is as follows: 
+| Directory | Description                     |
+| --------- | ------------------------------- |
+| /         | Module code files               |
+| tests     | Module tests                    |
+| models    | Data models used in the module. |
+
+
+When coding, avoid global functions. All function, except explicit really global ones as `isPlainObject` should be wrapped in it's own class. 
+All commonly used functions shall be put into `common` module. The model base classes shall be put into the `model-base` module.
+
+
+## Modules 
+Structure of every package is separated into modules. Module also contains tests for that module. One module should represent one closed functionally. For example all things concerning logging shall be in the logging module. 
+The common module shall contain all the common helper functions, common errors (exceptions), common tools.
+
+## Raw model
+Raw model shall be used for model definition. The models shall be database agnostic, so we can easily switch from one database to anther.
+
+## Logging 
+AppLogger must be used for logging.
+
+## Sample files
+Sample configuration files are located in the `config-samples` directory. All configuration samples (either project env or visual studio setting and lunch samples) 
+shall be put in this directory.
+
+## Dev environnement
+
+- VS Code with installed plugins: ESLint, Prettier Formatter for Visual Studio Code.
+- Nodejs 16+
+- Docker (or a running instance of MySQL somewhere else, only needed for running tests)
+
+### Setup vscode prettier
+
+It is recommended to use prettier as the code formatter. Setup your Visual studio code accordingly.
+The config file `.prettierrc.` contains the settings for the prettier. 
+This will turn on automatic prettier formatting in vscode. 
+
+## Linter
+Project uses ES lint with the typescript plugins for code linting. Visual studio code will warn you about every lint problem. 
+It is recommended to run:
+```
+npm run lint
+#or
+npm run lintFix
+```
+from time to time and fix the lint errors on the spot. 
+
+No errors and minimal warnings should be reported from te linter.
+
+## Linking the package dependencies
+Local dependencies can be linked directly from the git repos. In case we want to link to specific version git tagging shall be used.
+```typescript
+"@kalmia/kalmia-auth-api": "git+ssh://git@bitbucket.org/kalmiadevs/kalmia-auth-api.git#0.0.20",
+
+```
+When direct GIT repo links are used, the authentication to the module is needed.
+For local usage create a ssh key in the Bitbucket and [use it](https://support.atlassian.com/bitbucket-cloud/docs/set-up-an-ssh-key/).  
+
+For general access, eq. from docker -- a ro access key must be added.
+Package contains two keys, that can be used to access the repo. Private key must be copied to local account `./ssh/id_dsa` - [kalmia-dev-ro-access.key](./../kalmia-dev-ro-access.key) or other proper location. The public key shall be entered to the repo RO access keys - [kalmia-dev-ro-access-pub.key](./../kalmia-dev-ro-access-pub.key).
+
+
+
+## Logging 
+AppLogger module is provided. The logger module is agnostic and can be used on any provided logger implementation. Use `setLogger` method to override default console logger.
+
+## Environment setup
+
+We use `.env` file for setting up the environment. File needs to be placed in the root of the project (outside `/src` directory) with contents: 
+This project uses MYSQL as primary database. 
+
+The `config-samples/.env.example` shall be used as an example. Put all env variables into this file.
+
+
+**VS Code settings**
+
+In Visual Studio Code, menu File → Preferences → Settings → User Settings,
+
+"typescript.preferences.importModuleSpecifier": "relative"
+
+**Install dependencies**
+
+```
+npm i
+```
+
+**Running tests**
+
+```
+npm run test
+```
+
+
+### Git structure
+
+| Branch  | Description                                                                                                    |
+| ------- | -------------------------------------------------------------------------------------------------------------- |
+| master  | Production branch. No one can directly commit. Only PRs allowed. Should be merged from staging or development. |
+| develop | Main development branch. Only PRs allowed. Branch of master.                                                   |
+| staging | Staging deployment branch. Only PRs allowed. Branch of development.                                            |
+
+Pull develop branch and create your own branch for each feature from it.
+
+Use [this](https://nvie.com/posts/a-successful-git-branching-model/) guide for proper branch naming.
+
+#### Pull requests
+
+Code can only be merged to `develop` through pull requests. When developing a new feature. Create a branch from `develop` when finished open a pull request in BitBucket with reviewer as specified in README file.
+
+## Deploying on NPM
+To do this, you will need an account on the kalmia npm repo (contact one of the team leads, repo accessible on [npm.kalmia.si](https://npm.kalmia.si)).
+
+In your CLI you will have to be authenticated with an authorized account for the Kalmia npm registry. You can achieve this by running the following commands:
+
+```bash
+npm set registry https://npm.kalmia.si
+npm adduser --registry https://npm.kalmia.si
+```
+and following the login procedure.
+Afterwards you should be able to perform the command
+```bash
+npm run publish-kalmia
+```
+which builds the project and deploys it to the registry.
+`Keep in mind that every new publish requires an increase in the project version!`
+
+#### Deploying new packages
+To deploy a new package to the Kalmia registry, one needs to be authenticated in their CLI and navigated to the project directory and then run the command
+```bash
+npm publish --registry https://npm.kalmia.si
+```

@@ -1,0 +1,36 @@
+{
+    "cSpell.userWords": [
+        "uuidv"
+    ],
+    "typescript.preferences.importModuleSpecifier": "relative",
+    "cSpell.enabled": true,
+    "git.enableSmartCommit": false,
+    "diffEditor.ignoreTrimWhitespace": false,
+    "typescript.updateImportsOnFileMove.enabled": "always",
+    "workbench.colorTheme": "Visual Studio Dark",
+    "prettier.printWidth": 200,
+    "typescript.preferences.quoteStyle": "single",
+    "[html]": {
+        "editor.defaultFormatter": "vscode.html-language-features"
+    },
+    "javascript.updateImportsOnFileMove.enabled": "always",
+    "workbench.editorAssociations": {
+        "*.ipynb": "jupyter.notebook.ipynb"
+    },
+    "workbench.settings.editor": "ui",
+    "[json]": {
+        "editor.defaultFormatter": "vscode.json-language-features"
+    },
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "[markdown]": {
+        "editor.wordWrap": "on",
+        "editor.quickSuggestions": false,
+        "editor.defaultFormatter": "yzhang.markdown-all-in-one"
+    },
+    "npm.scriptExplorerAction": "run",
+        "[typescript]": {
+        "editor.codeActionsOnSave": {
+            "source.organizeImports": true
+        }
+    }
+}
