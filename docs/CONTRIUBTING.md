@@ -87,6 +87,7 @@ The `config-samples/.env.example` shall be used as an example. Put all env varia
 
 
 **VS Code settings**
+On all the projects also .vscode foder shall be commited to git.
 
 In Visual Studio Code, menu File → Preferences → Settings → User Settings,
 
