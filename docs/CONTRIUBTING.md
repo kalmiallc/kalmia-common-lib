@@ -12,6 +12,7 @@ On the `/src` level the following directory structure shall be used:
 
 
 Directory structure for modules is as follows: 
+
 | Directory | Description                     |
 | --------- | ------------------------------- |
 | /         | Module code files               |
