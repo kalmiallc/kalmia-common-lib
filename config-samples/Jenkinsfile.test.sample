@@ -1,7 +1,6 @@
 def getGitCommit() {
-    return sh(returnStdout: true, script: 'echo $GIT_COMMIT')
+    return sh(returnStdout: true, script: 'git describe --always')
 }
-
 
 
 def notifyBuild(String buildStatus = 'SUCESSFULL', String additionalMessage = '') {
@@ -30,7 +29,7 @@ def notifyBuild(String buildStatus = 'SUCESSFULL', String additionalMessage = ''
   }
 
   // Send notifications
-  slackSend (token: 'KqYSNZ9WbwtGdVz1IouaxUNG', channel: '#kalatea', color: colorCode, message: summary)
+  slackSend (channel: '#kalatea', color: colorCode, message: summary)
 }
 
 pipeline {
