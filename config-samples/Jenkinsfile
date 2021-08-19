@@ -1,0 +1,117 @@
+pipeline {
+    parameters {
+        choice(name: 'RELEASE', choices: ['dev', 'rc', 'stable'], description: 'Docker image tag')
+        choice(name: 'FORCE_BUILD', choices: ['false', 'true'], description: 'Force build without repositor changes')
+        string(name: 'SERVER', defaultValue: 'kalmia-lab3', description: '')
+        string(name: 'VIRTUAL_HOST', defaultValue: 'nagode-api.lab3.kalmia.si', description: '')
+        string(name: 'VIRTUAL_PORT', defaultValue: '4445', description: '')
+        string(name: 'API_HOST', defaultValue: '0.0.0.0', description: '')
+        string(name: 'LETSENCRYPT_HOST', defaultValue: 'nagode-api.lab3.kalmia.si', description: '')
+        string(name: 'LETSENCRYPT_EMAIL', defaultValue: 'itkalmia@kalmia.si', description: '')
+        string(name: 'MYSQL_HOST', defaultValue: 'lab3.kalmia.si', description: '')
+        string(name: 'MYSQL_USER', defaultValue: 'nagode_staging', description: '')
+        string(name: 'MYSQL_PORT', defaultValue: '3306', description: '')
+        string(name: 'MYSQL_DB', defaultValue: 'nagode', description: '')
+        string(name: 'MYSQL_PASSWORD', defaultValue: 'nagode_staging', description: '')
+        string(name: 'VOLUME_LOGS', defaultValue: '/app/logs', description: '')
+        string(name: 'NODE_ENV', defaultValue: 'development', description: '')
+        string(name: 'APP_ENV', defaultValue: 'development', description: '')
+        string(name: 'API_PORT', defaultValue: '4445', description: '')
+    }
+
+  /*
+   * This agent will need docker, git, node and npm installed at a minimum.
+   */
+  agent {
+    node {
+      label "${env.SERVER}"
+    }
+  }
+
+  environment {
+    IMAGE = "nagode-api"
+    RELEASE = "${env.RELEASE}"
+  }
+
+  stages {
+     stage ('Clone repository') {
+         steps {
+             checkout scm
+         }
+     }
+
+     stage('Check for new commit') {
+      steps {
+        sh '''
+          #!/bin/bash -xe
+          # check if $GIT_COMMIT and $GIT_PREVIOUS_COMMIT are present. If either of those
+          # two is missing, we allow build to proceed. If both are present, we check whether
+          # current commit is equal to the last one. $GIT_COMMIT and $GIT_PREVIOUS_COMMIT are
+          # equal, this means the build was triggered by a different branch — there are no
+          # changes in this current branch. Since there are no changes, there's no need to
+          # waste time building stuff for nothing.
+          echo "GIT COMMIT:  $GIT_COMMIT"
+          echo "PREV COMMIT: $GIT_PREVIOUS_COMMIT"
+          echo "FORCE BUILD: $FORCE_BUILD"
+          if [ ! -z "$GIT_COMMIT" ] ; then
+            if [ ! -z "$GIT_PREVIOUS_COMMIT" ] ; then
+              if [ "$GIT_COMMIT" = "$GIT_PREVIOUS_COMMIT" ] ; then
+                if [ $FORCE_BUILD = false ] ; then
+                  echo "--------------------------------------------"
+                  echo "    Nothing has changed. Aborting build."
+                  echo "--------------------------------------------"
+                  exit 1;
+                fi
+              fi
+            fi
+          fi
+        '''
+      }
+      post {
+        success {
+          echo('Changes were commited. Starting build ...')
+        }
+        failure {
+          echo("Aborted build")
+          script {
+            currentBuild.result = 'ABORTED'
+            currentBuild.currentResult = 'ABORTED'
+          }
+        }
+      }
+    }
+
+     stage('Free up space') {
+         steps {
+             sh '''
+                docker image prune -a -f
+             '''
+         }
+     }
+
+     stage('Build Image') {
+       steps {
+           sh '''
+             export VERSION=$(node -p "require(\'./package.json\').version")
+             echo "Preparing image docker.kalmia.si/web/${IMAGE}:${RELEASE}-$F"
+         
+             docker build --build-arg AUTH_REPO_ACCESS_KEY="$(cat kalmia-auth-repo-access.key)" -t ${IMAGE} .
+
+             docker tag ${IMAGE} "docker.kalmia.si/web/${IMAGE}:${RELEASE}-$VERSION"
+
+             echo "Build finished: docker.kalmia.si/web/${IMAGE}:${RELEASE}-$VERSION"
+           '''
+        }
+      }
+      
+      stage('Start servers') {
+          steps {
+              sh '''
+                docker-compose down && echo "container stopped" || echo "container not running, therefore it won't be stopped"
+                docker-compose up -d
+              '''
+          }
+      }
+
+  }
+}
