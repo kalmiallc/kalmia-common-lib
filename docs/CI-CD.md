@@ -29,6 +29,8 @@ To enable the automatic subdomain creation the following env variables need to b
 - VIRTUAL_HOST
 - VIRTUAL_PORT
 
+More info: https://hub.docker.com/r/jwilder/nginx-proxy
+
 A Jenkins pipeline file needs to be created with the needed st1eps to create a docker image.
 
 To create a Jenkins build, a new pipeline project needs to be setup at http://jenkins.kalmia.si:8080/.
