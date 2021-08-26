@@ -75,6 +75,31 @@ For general access, eq. from docker -- a ro access key must be added.
 Package contains two keys, that can be used to access the repo. Private key must be copied to local account `./ssh/id_dsa` - [kalmia-dev-ro-access.key](./../kalmia-dev-ro-access.key) or other proper location. The public key shall be entered to the repo RO access keys - [kalmia-dev-ro-access-pub.key](./../kalmia-dev-ro-access-pub.key).
 
 
+#### Windows credential settings for linking the packages
+Create git config file C:/Users/<username>/.ssh/config with entry
+
+```
+Host bitbucket.org
+     IdentityFile ~/.ssh/bitbucket_key
+     IdentitiesOnly yes
+```
+
+Save openssh private key in C:/Users/<username>/.ssh/bitbucket_key
+
+To prevent opening a popup asking crdentials, I had to edit git config file C:/Users/<username>/.gitconfig like this
+
+```
+[credential]
+    helper = manager
+    interactive = false
+    modalPrompt = false
+```
+
+This solution also works in VS Code console, but you have to cancel the credential popups when they appear (I didn't find the way to disable them yet).
+
+
+
+
 
 ## Logging 
 AppLogger module is provided. The logger module is agnostic and can be used on any provided logger implementation. Use `setLogger` method to override default console logger.
@@ -88,6 +113,7 @@ The `config-samples/.env.example` shall be used as an example. Put all env varia
 
 
 **VS Code settings**
+On all the projects also .vscode foder shall be commited to git.
 
 In Visual Studio Code, menu File → Preferences → Settings → User Settings,
 
