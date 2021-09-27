@@ -50,6 +50,6 @@ Sample docker compose file can be found here: [../config-samples/Jenkinsfile.tes
 ### Triggering builds from the bitbucket. 
 
 To trigger a build form any kind of action on the bitbucket, and bitbucket webhook must be added. The webhook needs proper credentials.
-To get the webhook details, Jenkins pipeline "Trigger builds remotely" with the proper credential token must be used.
+To get the webhook details, Jenkins pipeline setting (under build triggers) "Trigger builds remotely" with the proper credential token must be used.
 
-Username and token pair must be in line. Example: The token `CCDFC8Fxxxx` must be used `http://leon:xxxxx@` username. To get the proper credentials, check one of the existing projects.
+Username and token pair must be in line. Example: The token `CCDFC8Fxxxx` must be used `http://leon:xxxxx@` username. To get the proper credentials, check one of the existing projects (ex. nagode-api)
