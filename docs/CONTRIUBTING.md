@@ -86,7 +86,7 @@ Host bitbucket.org
 
 Save openssh private key in C:/Users/<username>/.ssh/bitbucket_key
 
-To prevent opening a popup asking crdentials, I had to edit git config file C:/Users/<username>/.gitconfig like this
+To prevent opening a popup asking credentials, I had to edit git config file C:/Users/<username>/.gitconfig like this
 
 ```
 [credential]
