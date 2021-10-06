@@ -1,7 +1,9 @@
 {
   "name": "kalmia-common-lib",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "Common lib for Kalmia projects",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
   "scripts": {
     "build": "rimraf dist && tsc --build tsconfig.json",
     "prepare": "npm run build",
