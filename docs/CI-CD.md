@@ -17,11 +17,18 @@ The following executors shall be used:
 - lab3.kalmia.si -- for direct deployment on the staging environment. 
 
 
+### Using the docker.kalmia.si
+Host docker.kalmia.si is a AWS elastic container. It can host private and public repositories. In general two types of users exist and should be used for accessing the private repos: 
+ - admin -- with push and create permissions 
+ - read - with pull permissions
+
+If possible docker should use `https://github.com/awslabs/amazon-ecr-credential-helper` to automatically handle the credentials. 
+
 
 ### Deploying to lab3.kalmia.si
 Lab3 hosts docker infrastructure, which automatically maps new images to proper subdomain URLs if they are properly configured.
 
-A docker management GUI (Portainer)  - http://lab3.kalmia.si:9000/ can be used to access the running images. The server hosts Nginx proxy and letsencrypt images, which automatically generate subdomain https hosting for the added docker image.
+A docker management GUI (Portainer)  - http://lab3.kalmia.si:9443/ can be used to access the running images. The server hosts Nginx proxy and letsencrypt images, which automatically generate subdomain https hosting for the added docker image.
 
 To enable the automatic subdomain creation the following env variables need to be set:
 - LETSENCRYPT_HOST
