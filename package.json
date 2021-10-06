@@ -1,6 +1,6 @@
 {
   "name": "kalmia-common-lib",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Common lib for Kalmia projects",
   "scripts": {
     "build": "rimraf dist && tsc --build tsconfig.json",
@@ -28,7 +28,7 @@
   ],
   "author": "Kalmia d.o.o. <info@kalmia.si>",
   "license": "UNLICENSED",
-  "homepage": "https://bitbucket.org/kalmiadevs/kalmia-sql-lib#readme",
+  "homepage": "https://bitbucket.org/kalmiadevs/kalmia-common-lib#readme",
   "dependencies": {
 
   },
