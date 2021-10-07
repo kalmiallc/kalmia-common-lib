@@ -1,11 +1,11 @@
 {
   "name": "kalmia-common-lib",
-  "version": "0.1.9",
+  "version": "0.1.7",
   "description": "Common lib for Kalmia projects",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "scripts": {
-    "build": "tsc --build tsconfig.json",
+    "build": "rimraf dist && tsc --build tsconfig.json",
     "prepare": "npm run build",
     "index": "ts-node src/index.ts",
     "lint": "eslint -c .eslintrc.js --ext .ts ./src",
@@ -32,14 +32,13 @@
   "license": "UNLICENSED",
   "homepage": "https://bitbucket.org/kalmiadevs/kalmia-common-lib#readme",
   "devDependencies": {
+    
+  },
+  "dependencies": {
+    "colors": "^1.4.0",
     "typescript": "^4.3.5",
     "ts-node": "^10.1.0",
     "dotenv": "^10.0.0"
-  },
-  "dependencies": {
-    "colors": "^1.4.0"
-  },
-  "peerDependencies": {
-    "dotenv": "^10.0.0"
+
   }
 }
