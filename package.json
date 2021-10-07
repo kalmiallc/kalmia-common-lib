@@ -1,11 +1,11 @@
 {
   "name": "kalmia-common-lib",
-  "version": "0.1.8",
+  "version": "0.1.9",
   "description": "Common lib for Kalmia projects",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "scripts": {
-    "build": "rimraf dist && tsc --build tsconfig.json",
+    "build": "tsc --build tsconfig.json",
     "prepare": "npm run build",
     "index": "ts-node src/index.ts",
     "lint": "eslint -c .eslintrc.js --ext .ts ./src",
