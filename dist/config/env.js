@@ -14,7 +14,7 @@ exports.env = {
      * Log writing destination.
      */
     LOG_TARGET: process.env['LOG_TARGET'] || 'console',
-    LOG_OUT_LEVEL: process.env['LOG_OUT_LEVEL'] || 'warn',
+    LOG_OUT_LEVEL: process.env['LOG_OUT_LEVEL'] || 'WRN',
     LOGGER_TYPE: process.env['LOGGER_TYPE'] || types_1.LoggerType.STANDARD,
 };
 //# sourceMappingURL=env.js.map
