@@ -6,6 +6,7 @@ import {
 import { JSONParser } from './modules/common/parsers';
 import { isPlainObject } from './modules/common/utils';
 import { conditionalPresenceValidator, enumInclusionValidator } from './modules/common/validators';
+import { DateTimeHelper } from './modules/datetime/date-manipulations';
 import { AppLogger, IAppLogger } from './modules/logger/app-logger';
 import { StandardLogger } from './modules/logger/logger';
 
@@ -16,13 +17,11 @@ export {
   AppLogger,
   IAppLogger,
   StandardLogger,
-
+  DateTimeHelper,
   isPlainObject,
-
   enumInclusionValidator,
   conditionalPresenceValidator,
   JSONParser,
-
   ICommonEnv,
   env,
 };
