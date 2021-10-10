@@ -3,16 +3,19 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.DateTimeHelper = void 0;
 class DateTimeHelper {
     static addHours(currDate, hours) {
-        currDate.setTime(currDate.getTime() + hours * 60 * 60 * 1000);
-        return currDate;
+        const newDate = new Date(currDate);
+        newDate.setTime(newDate.getTime() + hours * 60 * 60 * 1000);
+        return newDate;
     }
     static addDays(currDate, days) {
-        currDate.setTime(currDate.getTime() + days * 24 * 60 * 60 * 1000);
-        return currDate;
+        const newDate = new Date(currDate);
+        newDate.setTime(newDate.getTime() + days * 24 * 60 * 60 * 1000);
+        return newDate;
     }
     static addMinutes(currDate, minutes) {
-        currDate.setTime(currDate.getTime() + minutes * 60 * 1000);
-        return currDate;
+        const newDate = new Date(currDate);
+        newDate.setTime(newDate.getTime() + +minutes * 60 * 1000);
+        return newDate;
     }
 }
 exports.DateTimeHelper = DateTimeHelper;
