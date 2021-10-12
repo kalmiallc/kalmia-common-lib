@@ -29,7 +29,11 @@ Structure of every package is separated into modules. Module also contains tests
 The common module shall contain all the common helper functions, common errors (exceptions), common tools.
 
 ## Raw model
-Raw model shall be used for model definition. The models shall be database agnostic, so we can easily switch from one database to anther.
+Raw model shall be used for model definition. The models shall be database agnostic, so we can easily switch from one database to another.
+More about the raw model can be read [here](https://rawmodel.github.io/framework/), or on [github](https://github.com/rawmodel/framework). 
+Along with other raw model functions, population and serialization strategies are to be used. The population strategy defines which properties shall be filled when the populate() method is called.Populate usually means getting the values from the database. 
+
+Serialization returns the model in one object. Again the strategies define which fields shall be filled in the serialized object. 
 
 ## Logging 
 AppLogger must be used for logging.
