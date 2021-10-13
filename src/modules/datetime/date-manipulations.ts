@@ -14,4 +14,18 @@ export class DateTimeHelper {
     newDate.setTime(newDate.getTime() + + minutes * 60 * 1000);
     return newDate;
   }
+
+
+  
+  public static calculateIntervalTime(intervalStart: Date, intervalEnd: Date) {
+    return Math.abs(intervalStart.getTime() - intervalEnd.getTime());
+  }
+
+  public static convertMillisecondsToMinutes(milliseconds: number) {
+    return milliseconds / 1000 / 60;
+  }
+
+  public static convertMillisecondsToHours(milliseconds: number) {
+    return milliseconds / 1000 / 60 / 60;
+  }
 }
