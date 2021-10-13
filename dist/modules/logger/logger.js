@@ -96,28 +96,28 @@ class StandardLogger {
         const methodName = args.shift();
         const location = `[${fileName}/${methodName}]`;
         args.push(location);
-        writeLog(types_1.LogType.DEBUG, args.join(', '), null, this.loglevel);
+        writeLog(types_1.LogType.DEBUG, args.join(' '), null, this.loglevel);
     }
     verbose(args) {
         const fileName = args.shift();
         const methodName = args.shift();
         const location = `[${fileName}/${methodName}]`;
         args.push(location);
-        writeLog(types_1.LogType.VERBOSE, args.join(', '), null, this.loglevel);
+        writeLog(types_1.LogType.VERBOSE, args.join(' '), null, this.loglevel);
     }
     warn(args) {
         const fileName = args.shift();
         const methodName = args.shift();
         const location = `[${fileName}/${methodName}]`;
         args.push(location);
-        writeLog(types_1.LogType.WARN, args.join(', '), null, this.loglevel);
+        writeLog(types_1.LogType.WARN, args.join(' '), null, this.loglevel);
     }
     error(args) {
         const fileName = args.shift();
         const methodName = args.shift();
         const location = `[${fileName}/${methodName}]`;
         args.push(location);
-        writeLog(types_1.LogType.ERROR, args.join(', '), null, this.loglevel);
+        writeLog(types_1.LogType.ERROR, args.join(' '), null, this.loglevel);
     }
     // Intended for the messages form the tests
     test(args) {
@@ -126,7 +126,7 @@ class StandardLogger {
         args.unshift('[ TEST ] ');
         const location = `[${fileName}/${methodName}]`;
         args.push(location);
-        writeLog(types_1.LogType.INFO, args.join(), null, this.loglevel);
+        writeLog(types_1.LogType.INFO, args.join(' '), null, this.loglevel);
     }
 }
 exports.StandardLogger = StandardLogger;
