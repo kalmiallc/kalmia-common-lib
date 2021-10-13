@@ -23,10 +23,21 @@ Directory structure for modules is as follows:
 When coding, avoid global functions. All function, except explicit really global ones as `isPlainObject` should be wrapped in it's own class. 
 All commonly used functions shall be put into `common` module. The model base classes shall be put into the `model-base` module.
 
+## Libraries
+Libraries with specific functionalities are provided:
+- [kalmia-common-lib](https://bitbucket.org/kalmiadevs/kalmia-common-lib) (common functionalities: logging, object validation, datetime functions)
+- [kalmia-sql-lib](https://bitbucket.org/kalmiadevs/kalmia-sql-lib) (sql functionalities)
+- [kalmia-mysql-auth-api](https://bitbucket.org/kalmiadevs/kalmia-mysql-auth-api) (sql authentication lib)
+- [kalmia-serverless-workers](https://bitbucket.org/kalmiadevs/kalmia-serverless-workers) (workers to be used on the serverless)
+
+Libraries are linked with `git+ssh`. Refer to the [Linking the package dependencies](#linking-the-package-dependencies) for usage examples.
+
+The `git+ssh` will use the package deployed on master. Please note that the packages must be provided with the built dist folder (prepared code). 
 
 ## Modules 
 Structure of every package is separated into modules. Module also contains tests for that module. One module should represent one closed functionally. For example all things concerning logging shall be in the logging module. 
 The common module shall contain all the common helper functions, common errors (exceptions), common tools.
+
 
 ## Raw model
 Raw model shall be used for model definition. The models shall be database agnostic, so we can easily switch from one database to another.
@@ -38,6 +49,16 @@ Serialization returns the model in one object. Again the strategies define wh
 
 ## Logging 
 AppLogger module is provided. The logger module is agnostic and can be used on any provided logger implementation. Use `setLogger` method to override default console logger.
+AppLogger is general wrapper that is compliant with other logging frameworks, such as Pino, Winston, NestJs logger. 
+It supports other types of loggers. Currently standard logger is used as default.
+
+The following log levels are used:
+ 
+* info - shall be used for communication of the most general messages. 
+* warn - to communicate warnings.
+* error - to communicate errors.
+* debug - for debugging purposes -- this level is generally not available in production mode.
+* verbose - very detailed debugging messages -- this level is generally not available in production mode.v
 
 When using log methods, first 2 parameters must contain filename and method name. The following parameters can be arbitrary log arguments. 
 
@@ -52,8 +73,6 @@ Logger supports additional env variable settings:
  More detailed level also includes less detailed level. For example `WRN` will also include `ERR` and `INF`
  The logging types are defined in `src/config/types.ts`. Default is `WRN`.
  Example of controlling the log level on specific test  `LOG_OUT_LEVEL=INF npm run test -- device.e2e.test -t "Should not return device with invalid ID"`
-
- 
 
 
 ## Sample files
