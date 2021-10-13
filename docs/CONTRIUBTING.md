@@ -51,6 +51,7 @@ Logger supports additional env variable settings:
 - `LOG_OUT_LEVEL` - level to which the output will be displayed. The `VBS` level will output all the data. 
  More detailed level also includes less detailed level. For example `WRN` will also include `ERR` and `INF`
  The logging types are defined in `src/config/types.ts`. Default is `WRN`.
+ Example of controlling the log level on specific test  `LOG_OUT_LEVEL=INF npm run test -- device.e2e.test -t "Should not return device with invalid ID"`
 
  
 

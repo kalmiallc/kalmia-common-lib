@@ -23,5 +23,14 @@
 			"$3"
 		],
 		"description": "Log to applogger"
+	},
+	"Log to app logger test": {
+		"scope": "javascript,typescript",
+		"prefix": "klog.test",
+		"body": [
+			"AppLogger.debug('${1:theTestMethod}', '$TM_FILENAME', '$2');",
+			"$3"
+		],
+		"description": "Log to applogger"
 	}
 }
