@@ -13,7 +13,7 @@ export declare class DateTimeHelper {
     * @param date Date to be converted
     * @returns converted date in iso string
     */
-    toISOString(date: Date): string;
+    static toISOString(date: Date): string;
     /**
      * Converts Date to local time based ISO string without timezone part.
      * Example Sun Jan 23 2000 00:00:00 GMT+0100 which equals 2000-01-22T23:00:00.000Z
@@ -22,6 +22,6 @@ export declare class DateTimeHelper {
      * @param date Date to be converted
      * @returns converted date in iso string (no timezone)
      */
-    toISOStringNoTimezone(date: any): string;
+    static toISOStringNoTimezone(date: any): string;
 }
 //# sourceMappingURL=date-manipulations.d.ts.map

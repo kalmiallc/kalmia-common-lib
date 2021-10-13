@@ -34,7 +34,7 @@ class DateTimeHelper {
     * @param date Date to be converted
     * @returns converted date in iso string
     */
-    toISOString(date) {
+    static toISOString(date) {
         const tzo = -date.getTimezoneOffset();
         const dif = tzo >= 0 ? '+' : '-';
         const pad = (num) => {
@@ -65,7 +65,7 @@ class DateTimeHelper {
      * @param date Date to be converted
      * @returns converted date in iso string (no timezone)
      */
-    toISOStringNoTimezone(date) {
+    static toISOStringNoTimezone(date) {
         const local = new Date(date);
         local.setMinutes(date.getMinutes() - date.getTimezoneOffset());
         return local.toISOString().slice(0, local.toISOString().length - 1);
