@@ -39,14 +39,20 @@ Serialization returns the model in one object. Again the strategies define wh
 ## Logging 
 AppLogger module is provided. The logger module is agnostic and can be used on any provided logger implementation. Use `setLogger` method to override default console logger.
 
-when using log methods, first 2 parameters must contain filename and method name. The following parameters can be arbitrary log arguments. 
+When using log methods, first 2 parameters must contain filename and method name. The following parameters can be arbitrary log arguments. 
+
+Visual studio logging snippet is provided for quicker logging `config-samples/snippets/logging.code-snippets`.
 
 Logger supports additional env variable settings:
 - `LOG_TARGET` - supports 2 options: 
   - color - express output in color. 
   - console - a console adjusted log format.
 
-- `LOG_OUT_LEVEL` - level to which the output will be displayed. The `verbose` level will output all the data. Default is `info`.
+- `LOG_OUT_LEVEL` - level to which the output will be displayed. The `VBS` level will output all the data. 
+ More detailed level also includes less detailed level. For example `WRN` will also include `ERR` and `INF`
+ The logging types are defined in `src/config/types.ts`. Default is `WRN`.
+
+ 
 
 
 ## Sample files
