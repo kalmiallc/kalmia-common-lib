@@ -17,6 +17,15 @@ class DateTimeHelper {
         newDate.setTime(newDate.getTime() + +minutes * 60 * 1000);
         return newDate;
     }
+    static calculateIntervalTime(intervalStart, intervalEnd) {
+        return Math.abs(intervalStart.getTime() - intervalEnd.getTime());
+    }
+    static convertMillisecondsToMinutes(milliseconds) {
+        return milliseconds / 1000 / 60;
+    }
+    static convertMillisecondsToHours(milliseconds) {
+        return milliseconds / 1000 / 60 / 60;
+    }
 }
 exports.DateTimeHelper = DateTimeHelper;
 //# sourceMappingURL=date-manipulations.js.map
