@@ -37,9 +37,10 @@ RUN ssh -T git@bitbucket.org && if [ $? -eq 0 ]; then echo 'TEST OK'; else echo 
 # │ INSTALL NODE MODULES
 # ╘═════════════════════════
 ## Storing node modules on a separate layer will prevent unnecessary npm installs at each build
-COPY package.json package-lock.json ./
+COPY package.json ./
 RUN rm -rf node_modules
-RUN npm install && if [ $? -eq 0 ]; then echo 'INSTALL OK'; else echo 'INSTALL FAILED'; exit 1; fi;
+RUN rm -rf package-lock.json
+RUN npm install --no-save && if [ $? -eq 0 ]; then echo 'INSTALL OK'; else echo 'INSTALL FAILED'; exit 1; fi;
 
 # ╒═════════════════════════
 # │ BUILD APP
@@ -63,7 +64,7 @@ RUN test -f ./dist/src/main.js
 FROM node:16-alpine as prod-prepare
 
 # Node modules
-COPY --from=build package.json package-lock.json tsconfig.build.json tsconfig.json ./
+COPY --from=build package.json tsconfig.build.json tsconfig.json ./
 COPY --from=build /node_modules ./node_modules
 COPY --from=build /src ./src
 
@@ -84,7 +85,7 @@ RUN mkdir -p /api-app
 WORKDIR /api-app
 
 # Node modules
-COPY --from=prod-prepare package.json package-lock.json tsconfig.build.json tsconfig.json ./
+COPY --from=prod-prepare package.json tsconfig.build.json tsconfig.json ./
 COPY --from=prod-prepare /node_modules ./node_modules
 
 

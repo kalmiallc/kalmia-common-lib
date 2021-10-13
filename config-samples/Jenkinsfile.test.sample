@@ -29,7 +29,7 @@ def notifyBuild(String buildStatus = 'SUCESSFULL', String additionalMessage = ''
   }
 
   // Send notifications
-  slackSend (channel: '#kalatea', color: colorCode, message: summary)
+  slackSend (channel: '#kalatea-monitor', color: colorCode, message: summary)
 }
 
 pipeline {
@@ -41,8 +41,13 @@ pipeline {
         string(name: 'MYSQL_PASSWORD', defaultValue: 'test', description: '')
         string(name: 'MYSQL_DB', defaultValue: 'nagode', description: '')
         string(name: 'MINIO_VOLUME_MOUNT', defaultValue: './s3-data', description: '')
-        string(name: 'AWS_KEY', defaultValue: 'testtesttest', description: '')
-        string(name: 'AWS_SECRET', defaultValue: 'testtesttestteset', description: '')
+        string(name: 'APP_ENV', defaultValue: 'testing', description: '')
+        
+        string(name: 'AWS_S3_KEY_TEST', defaultValue: 'testtesttest', description: '')
+        string(name: 'AWS_S3_SECRET_TEST', defaultValue: 'testtesttestteset', description: '')
+        string(name: 'LOG_TARGET', defaultValue: 'NONE', description: '')
+        string(name: 'AWS_S3_BUCKET_TEST', defaultValue: 'nagode-aws-bucket-test', description: '')
+        string(name: 'AWS_S3_ENDPOINT_TEST', defaultValue: 'http://s3:9010', description: '')
     }
         
 
@@ -126,6 +131,7 @@ pipeline {
      stage('Build Image') {
        steps {
            sh '''
+             chmod -R 777 s3-data 
              export VERSION=$(node -p "require(\'./package.json\').version")
              echo "Preparing image docker.kalmia.si/web/${IMAGE}:${RELEASE}-$F"       
              AUTH_REPO_ACCESS_KEY="$(cat kalmia-auth-repo-access.key)" docker-compose -f docker-compose.test.yaml build --force
@@ -142,18 +148,16 @@ pipeline {
           post {
             success {
               echo('Build and tests successful')
-              notifyBuild("SUCCESSFUL", "Build GIT sha: sha: ${getGitCommit()}")
+              notifyBuild("SUCCESSFUL", "Build and tests passed for build GIT sha: ${getGitCommit()}")
             }
             failure {
               echo('Build and tests failed')
               script {
                 currentBuild.result = 'FAILURE'
-                currentBuild.currentResult = 'FAILURE'
-                notifyBuild("FAIL", "Build GIT sha: ${getGitCommit()}")
+                notifyBuild("FAIL", "Build and tests failed for build GIT sha: ${getGitCommit()}")
               }
             }
           }
       }
-
   }
 }

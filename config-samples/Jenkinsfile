@@ -1,3 +1,36 @@
+def getGitCommit() {
+    return sh(returnStdout: true, script: 'git describe --always')
+}
+
+def notifyBuild(String buildStatus = 'SUCESSFULL', String additionalMessage = '') {
+  // build status of null means successful
+  buildStatus =  buildStatus ?: 'SUCCESSFUL'
+
+  // Default values
+  def colorName = 'RED'
+  def colorCode = '#FF0000'
+  def subject = "${buildStatus}: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]'"
+  def summary = "${subject} (${env.BUILD_URL})"
+  if(additionalMessage) {
+    summary = summary + ", ${additionalMessage}"
+  }
+
+  // Override default values based on build status
+  if (buildStatus == 'STARTED') {
+    color = 'YELLOW'
+    colorCode = '#FFFF00'
+  } else if (buildStatus == 'SUCCESSFUL') {
+    color = 'GREEN'
+    colorCode = '#00FF00'
+  } else {
+    color = 'RED'
+    colorCode = '#FF0000'
+  }
+
+  // Send notifications
+  slackSend (channel: '#kalatea-monitor', color: colorCode, message: summary)
+}
+
 pipeline {
     parameters {
         choice(name: 'RELEASE', choices: ['dev', 'rc', 'stable'], description: 'Docker image tag')
@@ -17,8 +50,28 @@ pipeline {
         string(name: 'NODE_ENV', defaultValue: 'development', description: '')
         string(name: 'APP_ENV', defaultValue: 'development', description: '')
         string(name: 'API_PORT', defaultValue: '4445', description: '')
-    }
+        string(name: 'AWS_S3_KEY', defaultValue: 'kalmia', description: '')
+        string(name: 'AWS_S3_SECRET', defaultValue: 'kalmia123', description: '')
+        string(name: 'AWS_S3_BUCKET', defaultValue: 'nagode-aws-bucket', description: '')
+        string(name: 'AWS_S3_ENDPOINT', defaultValue: 'https://s3.lab3.kalmia.si', description: '')
+        string(name: 'AWS_REG', defaultValue: 'local', description: '')
+        string(name: 'APP_CORS_DOMAINS', defaultValue: 'http://nagode-test.kalmia.si:8000,http://nagode-test.kalmia.si', description: '')
 
+        
+        /* Params for test */
+        string(name: 'MYSQL_DB_TEST', defaultValue: 'nagode', description: '')
+        string(name: 'MYSQL_PORT_TEST', defaultValue: '3307', description: '')
+        string(name: 'MYSQL_USER_TEST', defaultValue: 'root', description: '')
+        string(name: 'MYSQL_PASSWORD_TEST', defaultValue: 'test', description: '')
+        
+        string(name: 'AWS_S3_KEY_TEST', defaultValue: 'testtesttest', description: '')
+        string(name: 'AWS_S3_SECRET_TEST', defaultValue: 'testtesttestteset', description: '')
+        string(name: 'LOG_TARGET', defaultValue: 'NONE', description: '')
+        string(name: 'AWS_S3_BUCKET_TEST', defaultValue: 'nagode-aws-bucket-test', description: '')
+        string(name: 'AWS_S3_ENDPOINT_TEST', defaultValue: 'http://s3:9010', description: '')
+
+
+    }
   /*
    * This agent will need docker, git, node and npm installed at a minimum.
    */
@@ -81,6 +134,27 @@ pipeline {
       }
     }
 
+    stage('Run tests') {
+         steps {
+             sh '''
+               AUTH_REPO_ACCESS_KEY="$(cat kalmia-auth-repo-access.key)" docker-compose -f docker-compose.test.yaml build --force
+               AUTH_REPO_ACCESS_KEY="$(cat kalmia-auth-repo-access.key)" docker-compose -f docker-compose.test.yaml up --force-recreate --abort-on-container-exit --exit-code-from api
+             '''
+         }
+         post {
+            success {
+              echo('Tests successful')
+            }
+            failure {
+              echo('Tests failed')
+              script {
+                currentBuild.result = 'FAILURE'
+                notifyBuild("FAIL", "Tests failed for build GIT sha: ${getGitCommit()}")
+              }
+            }
+          }
+     }
+
      stage('Free up space') {
          steps {
              sh '''
@@ -94,7 +168,7 @@ pipeline {
            sh '''
              export VERSION=$(node -p "require(\'./package.json\').version")
              echo "Preparing image docker.kalmia.si/web/${IMAGE}:${RELEASE}-$F"
-         
+             export APP_ENV=staging
              docker build --build-arg AUTH_REPO_ACCESS_KEY="$(cat kalmia-auth-repo-access.key)" -t ${IMAGE} .
 
              docker tag ${IMAGE} "docker.kalmia.si/web/${IMAGE}:${RELEASE}-$VERSION"
@@ -110,6 +184,17 @@ pipeline {
                 docker-compose down && echo "container stopped" || echo "container not running, therefore it won't be stopped"
                 docker-compose up -d
               '''
+          }
+          post {
+            success {
+              notifyBuild("SUCCESSFUL", "Docker nagode-api successfully build and started ---  GIT sha: ${getGitCommit()}")
+            }
+            failure {
+              script {
+                currentBuild.result = 'FAILURE'
+                notifyBuild("SUCCESSFUL", "Docker nagode-api failed to start ---  GIT sha: ${getGitCommit()}")
+              }
+            }
           }
       }
 
