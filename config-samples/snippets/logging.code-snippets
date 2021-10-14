@@ -28,7 +28,7 @@
 		"scope": "javascript,typescript",
 		"prefix": "klog.test",
 		"body": [
-			"AppLogger.debug('${1:theTestMethod}', '$TM_FILENAME', '$2');",
+			"AppLogger.test('${1:theTestMethod}', '$TM_FILENAME', '$2');",
 			"$3"
 		],
 		"description": "Log to applogger"
