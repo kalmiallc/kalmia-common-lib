@@ -35,8 +35,19 @@ Along with other raw model functions, population and serialization strategies ar
 
 Serialization returns the model in one object. Again the strategies define which fields shall be filled in the serialized object. 
 
+
 ## Logging 
-AppLogger must be used for logging.
+AppLogger module is provided. The logger module is agnostic and can be used on any provided logger implementation. Use `setLogger` method to override default console logger.
+
+when using log methods, first 2 parameters must contain filename and method name. The following parameters can be arbitrary log arguments. 
+
+Logger supports additional env variable settings:
+- `LOG_TARGET` - supports 2 options: 
+  - color - express output in color. 
+  - console - a console adjusted log format.
+
+- `LOG_OUT_LEVEL` - level to which the output will be displayed. The `verbose` level will output all the data. Default is `info`.
+
 
 ## Sample files
 Sample configuration files are located in the `config-samples` directory. All configuration samples (either project env or visual studio setting and lunch samples) 
@@ -104,18 +115,6 @@ This solution also works in VS Code console, but you have to cancel the credenti
 
 
 
-
-## Logging 
-AppLogger module is provided. The logger module is agnostic and can be used on any provided logger implementation. Use `setLogger` method to override default console logger.
-
-when using log methods, first 2 parameters must contain filename and method name. The following parameters can be arbitrary log arguments. 
-
-Logger supports additional env variable settings:
-- `LOG_TARGET` - supports 2 options: 
-  - color - express output in color. 
-  - console - a console adjusted log format.
-
-- `LOG_OUT_LEVEL` - level to which the output will be displayed. The `verbose` level will output all the data. Default is `info`.
 
 
 ## Environment setup
