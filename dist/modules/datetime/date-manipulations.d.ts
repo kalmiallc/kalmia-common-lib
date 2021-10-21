@@ -1,7 +1,37 @@
 export declare class DateTimeHelper {
-    static addHours(currDate: Date, hours: number): Date;
-    static addDays(currDate: Date, days: number): Date;
-    static addMinutes(currDate: Date, minutes: number): Date;
+    /**
+     * Adds hours to date and returns new instance of the date with the added hours.
+     * NOTICE: This method uses the Date object which uses system defined daylight savings time offsets.
+     * Be aware, that on the dates when time changes, the drift is expected. For example, if the time changes on
+     * 24.10 03:00 (to -1 h), adding one hour will result in the same time 24.10 03:00.
+     *
+     * @param inDate - input date
+     * @param hours - hours to be added
+     * @returns new date with additional hours.
+     */
+    static addHours(inDate: Date, hours: number): Date;
+    /**
+      * Adds days to date and returns new instance of the date with the added hours.
+      * NOTICE: This method uses the Date object which uses system defined daylight savings time offsets.
+      * Be aware, that on the dates when time changes, the drift is expected. For example, if the time changes on
+      * 24.10 03:00 (to -1 h), adding one hour will result in the same time 24.10 03:00.
+      *
+      * @param inDate - input date
+      * @param hours - hours to be added
+      * @returns new date with additional hours.
+      */
+    static addDays(inDate: Date, days: number): Date;
+    /**
+      * Adds days to date and returns new instance of the date with the added hours.
+      * NOTICE: This method uses the Date object which uses system defined daylight savings time offsets.
+      * Be aware, that on the dates when time changes, the drift is expected. For example, if the time changes on
+      * 24.10 03:00 (to -1 h), adding one hour will result in the same time 24.10 03:00.
+      *
+      * @param inDate - input date
+      * @param hours - hours to be added
+      * @returns new date with additional hours.
+      */
+    static addMinutes(inDate: Date, minutes: number): Date;
     static calculateIntervalTime(intervalStart: Date, intervalEnd: Date): number;
     static convertMillisecondsToMinutes(milliseconds: number): number;
     static convertMillisecondsToHours(milliseconds: number): number;
