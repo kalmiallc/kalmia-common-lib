@@ -1,16 +1,48 @@
 export class DateTimeHelper {
-  public static addHours(currDate: Date, hours: number): Date {
-    const newDate = new Date(currDate);
+   /**
+    * Adds hours to date and returns new instance of the date with the added hours. 
+    * NOTICE: This method uses the Date object which uses system defined daylight savings time offsets.
+    * Be aware, that on the dates when time changes, the drift is expected. For example, if the time changes on
+    * 24.10 03:00 (to -1 h), adding one hour will result in the same time 24.10 03:00.
+    * 
+    * @param inDate - input date
+    * @param hours - hours to be added
+    * @returns new date with additional hours.
+    */
+  public static addHours(inDate: Date, hours: number): Date {
+    const newDate = new Date(inDate);
     newDate.setTime(newDate.getTime() + hours * 60 * 60 * 1000);
     return newDate;
   }
-  public static addDays(currDate: Date, days: number): Date {
-    const newDate = new Date(currDate);
+
+  /**
+    * Adds days to date and returns new instance of the date with the added hours. 
+    * NOTICE: This method uses the Date object which uses system defined daylight savings time offsets.
+    * Be aware, that on the dates when time changes, the drift is expected. For example, if the time changes on
+    * 24.10 03:00 (to -1 h), adding one hour will result in the same time 24.10 03:00.
+    * 
+    * @param inDate - input date
+    * @param hours - hours to be added
+    * @returns new date with additional hours.
+    */
+  public static addDays(inDate: Date, days: number): Date {
+    const newDate = new Date(inDate);
     newDate.setTime(newDate.getTime() + days * 24 * 60 * 60 * 1000);
     return newDate;
   }
-  public static addMinutes(currDate: Date, minutes: number): Date {
-    const newDate = new Date(currDate);
+
+  /**
+    * Adds days to date and returns new instance of the date with the added hours. 
+    * NOTICE: This method uses the Date object which uses system defined daylight savings time offsets.
+    * Be aware, that on the dates when time changes, the drift is expected. For example, if the time changes on
+    * 24.10 03:00 (to -1 h), adding one hour will result in the same time 24.10 03:00.
+    * 
+    * @param inDate - input date
+    * @param hours - hours to be added
+    * @returns new date with additional hours.
+    */
+  public static addMinutes(inDate: Date, minutes: number): Date {
+    const newDate = new Date(inDate);
     newDate.setTime(newDate.getTime() + + minutes * 60 * 1000);
     return newDate;
   }
