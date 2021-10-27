@@ -51,7 +51,7 @@ function writeLog(type, message, error, loglevel) {
     if (!loglevel) {
         loglevel = env_1.env.LOG_OUT_LEVEL;
     }
-    // filter out log level 
+    // filter out log level
     if (loglevel === types_1.LogType.ERROR) {
         if (type === types_1.LogType.DEBUG || type === types_1.LogType.VERBOSE || type === types_1.LogType.WARN || type === types_1.LogType.INFO) {
             return;
