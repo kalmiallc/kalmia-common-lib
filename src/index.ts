@@ -1,8 +1,5 @@
 import { env, ICommonEnv } from './config/env';
-import {
-  ApplicationEnv, LoggerType,
-  LogType
-} from './config/types';
+import { ApplicationEnv, LoggerType, LogType } from './config/types';
 import { JSONParser } from './modules/common/parsers';
 import { isPlainObject } from './modules/common/utils';
 import { conditionalPresenceValidator, enumInclusionValidator } from './modules/common/validators';
@@ -23,6 +20,5 @@ export {
   conditionalPresenceValidator,
   JSONParser,
   ICommonEnv,
-  env,
+  env
 };
-

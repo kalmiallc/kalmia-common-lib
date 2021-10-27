@@ -2,7 +2,6 @@
 import * as dotenv from 'dotenv';
 import { ApplicationEnv, LoggerType } from './types';
 
-
 export interface ICommonEnv {
   APP_ENV: string;
   LOG_TARGET: string;
@@ -22,5 +21,5 @@ export const env: ICommonEnv = {
    */
   LOG_TARGET: process.env['LOG_TARGET'] || 'console',
   LOG_OUT_LEVEL: process.env['LOG_OUT_LEVEL'] || 'WRN',
-  LOGGER_TYPE: process.env['LOGGER_TYPE'] || LoggerType.STANDARD,
+  LOGGER_TYPE: process.env['LOGGER_TYPE'] || LoggerType.STANDARD
 };

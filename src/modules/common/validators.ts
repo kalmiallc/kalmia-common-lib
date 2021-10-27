@@ -1,5 +1,3 @@
-
-
 /**
  * Validates if value is inside enumerator
  */
@@ -20,11 +18,10 @@ export function enumInclusionValidator(enumerator: any, allowNull = false) {
   };
 }
 
-
 /**
- * Validates the presence of fields in current object. 
+ * Validates the presence of fields in current object.
  * If field is not empty it will return true.
- * 
+ *
  * @param fieldNames to be validated
  * @returns True if field not empty
  */

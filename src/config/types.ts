@@ -22,4 +22,3 @@ export enum ApplicationEnv {
   STG = 'staging',
   PROD = 'production'
 }
-

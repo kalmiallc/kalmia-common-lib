@@ -1,0 +1,57 @@
+{
+"version": "0.2.0",
+"configurations": [
+
+
+  
+
+
+    {
+        "type": "pwa-node",
+        "request": "launch",
+        "name": "Debug Nest Framework",
+        "runtimeExecutable": "npm",
+        "program": "npm run start:dev",
+        "runtimeArgs": ["run", "start", "dev"],
+        "cwd": "${workspaceRoot}",
+        "protocol": "inspector",
+        "console": "integratedTerminal"
+    },
+        {
+          "type": "node",
+          "request": "launch",
+          "name": "Jest Test All",
+          "program": "${workspaceFolder}/node_modules/jest/bin/jest.js",
+          "args": ["--runInBand", "--config=${workspaceFolder}/jest.config.ts", "--forceExit"],
+          "env": {
+            "APP_ENV": "testing"
+          },
+          "console": "integratedTerminal",
+          "internalConsoleOptions": "neverOpen"
+        },
+        {
+          "type": "node",
+          "request": "launch",
+          "name": "Jest Test specific test",
+          "program": "${workspaceFolder}/node_modules/jest/bin/jest.js",
+          "args": ["--runInBand", "--config=${workspaceFolder}/jest.config.ts", "--forceExit", "--config jest.config.ts", "device.work-hours.e2e.test",   "-t",  "Should return work hours for statically set intervals"],
+          "env": {
+            "APP_ENV": "testing"
+          },
+          "console": "integratedTerminal",
+          "internalConsoleOptions": "neverOpen"
+        },
+        {
+          "type": "node",
+          "request": "launch",
+          "name": "Jest Test Current file",
+          "program": "${workspaceFolder}/node_modules/jest/bin/jest.js",
+          "args": ["--runInBand", "--config=${workspaceFolder}/jest.config.ts", "--forceExit", "${fileBasename}" ],
+          "env": {
+            "APP_ENV": "testing"
+          },
+          "console": "integratedTerminal",
+          "internalConsoleOptions": "neverOpen"
+        }
+]
+}
