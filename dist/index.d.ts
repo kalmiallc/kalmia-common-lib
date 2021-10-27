@@ -6,5 +6,5 @@ import { conditionalPresenceValidator, enumInclusionValidator } from './modules/
 import { DateTimeHelper } from './modules/datetime/date-manipulations';
 import { AppLogger, IAppLogger } from './modules/logger/app-logger';
 import { StandardLogger } from './modules/logger/logger';
-export { LoggerType, LogType, ApplicationEnv, AppLogger, IAppLogger, StandardLogger, DateTimeHelper, isPlainObject, enumInclusionValidator, conditionalPresenceValidator, JSONParser, ICommonEnv, env, };
+export { LoggerType, LogType, ApplicationEnv, AppLogger, IAppLogger, StandardLogger, DateTimeHelper, isPlainObject, enumInclusionValidator, conditionalPresenceValidator, JSONParser, ICommonEnv, env };
 //# sourceMappingURL=index.d.ts.map

@@ -1,5 +1,6 @@
 /**
  * Tells if tested variable is plain object.
+ *
  * @param testVar Tested variable
  * @returns boolean
  */

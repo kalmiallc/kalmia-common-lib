@@ -58,12 +58,11 @@ function expressInColor(type: LogType, message: string, error?: Error) {
 }
 
 function writeLog(type: LogType, message: string, error?: Error, loglevel?: string): void {
-  
   if (!loglevel) {
     loglevel = env.LOG_OUT_LEVEL;
   }
 
-  // filter out log level 
+  // filter out log level
   if (loglevel === LogType.ERROR) {
     if (type === LogType.DEBUG || type === LogType.VERBOSE || type === LogType.WARN || type === LogType.INFO) {
       return;
@@ -79,12 +78,12 @@ function writeLog(type: LogType, message: string, error?: Error, loglevel?: stri
       return;
     }
   }
-  if (loglevel === LogType.DEBUG ) {
+  if (loglevel === LogType.DEBUG) {
     if (type === LogType.VERBOSE) {
       return;
     }
   }
-  
+
   if (env.LOG_TARGET == 'color') {
     expressInColor(type, message, error);
   } else if (env.LOG_TARGET == 'console') {
@@ -94,12 +93,11 @@ function writeLog(type: LogType, message: string, error?: Error, loglevel?: stri
 
 // console logger is the default logger
 export class StandardLogger {
- 
   private loglevel: string;
   public setLogLevel(ll: string) {
     this.loglevel = ll;
   }
- 
+
   public info(args: any[]) {
     const fileName = args.shift();
     const methodName = args.shift();

@@ -3,6 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.isPlainObject = void 0;
 /**
  * Tells if tested variable is plain object.
+ *
  * @param testVar Tested variable
  * @returns boolean
  */
