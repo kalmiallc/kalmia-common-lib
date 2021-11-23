@@ -60,6 +60,38 @@ export class DateTimeHelper {
   }
 
   /**
+   * Get start of the day
+   *
+   * @param date reference date
+   * @returns start of the day
+   */
+
+  public static startOfTheDay(date: Date) {
+    const stDay = new Date(date);
+    stDay.setHours(0);
+    stDay.setMinutes(0);
+    stDay.setSeconds(0);
+    stDay.setMilliseconds(0);
+    return stDay;
+  }
+
+  /**
+   * Get end of the day
+   *
+   * @param date reference date
+   * @returns end of the day
+   */
+
+  public static endOfTheDay(date: Date) {
+    const endDay = new Date(date);
+    endDay.setHours(23);
+    endDay.setMinutes(59);
+    endDay.setSeconds(59);
+    endDay.setMilliseconds(999);
+    return endDay;
+  }
+
+  /**
    * Converts Date to local time based ISO string
    * Example Sun Jan 23 2000 00:00:00 GMT+0100 which equals 2000-01-22T23:00:00.000Z
    * will be converted to 2000-01-23T00:00:00+01:00,
