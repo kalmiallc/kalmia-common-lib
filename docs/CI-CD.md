@@ -19,10 +19,27 @@ The following executors shall be used:
 
 ### Using the docker.kalmia.si
 Host docker.kalmia.si is a AWS elastic container. It can host private and public repositories. In general two types of users exist and should be used for accessing the private repos: 
- - admin -- with push and create permissions 
- - read - with pull permissions
+ - admin -- with push and create permissions (kalatea-registry-admin -- AKIAQC3R2AEVZO3IM3DQ)
+ - read - with pull permissions (kalatea-registry-user - AKIAQC3R2AEVQEFUOTEP)
+
+Ask Borut for secret keys.
 
 If possible docker should use `https://github.com/awslabs/amazon-ecr-credential-helper` to automatically handle the credentials. 
+
+A public temporary repository exists for publishing temporary images (if we need to share some image or need quick deployment on the Portainer).
+Repository can be accessed on `https://gallery.ecr.aws/e1l7u2n7/temporary` or `https://gallery.ecr.aws/kalmia/temporary`. 
+Images should be deleted after. 
+
+Example of publishing image to repo:
+1. Create aws credentials profile with CLI. `aws configure --profile docker_push`
+2. Use the profile to login: `aws ecr-public get-login-password --region us-east-1 | docker login --username AWS --password-stdin public.ecr.aws/e1l7u2n7`
+3. Properly tag local image: `docker tag i5g-fe public.ecr.aws/e1l7u2n7/temporary:i5g-test-1.0`
+4. Push to public repo: `docker push public.ecr.aws/e1l7u2n7/temporary:i5g-test-1.0`
+5. List images: `aws ecr-public describe-image-tags --profile docker_push --repository-name temporary --region us-east-1`
+6. Delete image: `aws ecr-public batch-delete-image --profile docker_push --repository-name temporary --region us-east-1  --image-ids imageTag=i5g-test-1.0`
+ 
+
+The image can simply be used to pull it and test it on lab3 Portainer.  
 
 
 ### Deploying to lab3.kalmia.si
