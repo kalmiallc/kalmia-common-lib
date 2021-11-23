@@ -36,6 +36,20 @@ export declare class DateTimeHelper {
     static convertMillisecondsToMinutes(milliseconds: number): number;
     static convertMillisecondsToHours(milliseconds: number): number;
     /**
+     * Get start of the day
+     *
+     * @param date reference date
+     * @returns start of the day
+     */
+    static startOfTheDay(date: Date): Date;
+    /**
+     * Get end of the day
+     *
+     * @param date reference date
+     * @returns end of the day
+     */
+    static endOfTheDay(date: Date): Date;
+    /**
      * Converts Date to local time based ISO string
      * Example Sun Jan 23 2000 00:00:00 GMT+0100 which equals 2000-01-22T23:00:00.000Z
      * will be converted to 2000-01-23T00:00:00+01:00,
