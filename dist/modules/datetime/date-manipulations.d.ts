@@ -39,16 +39,48 @@ export declare class DateTimeHelper {
      * Get start of the day
      *
      * @param date reference date
-     * @returns start of the day
+     * @returns start of the day in new date instance
      */
     static startOfTheDay(date: Date): Date;
     /**
      * Get end of the day
      *
      * @param date reference date
-     * @returns end of the day
+     * @returns start of the day in new date instance
      */
     static endOfTheDay(date: Date): Date;
+    /**
+     * Get start of the week
+     *
+     * @param date reference date
+     * @param startDay do we need to start with the 00:00:00
+     * @returns start of the day in new date instance
+     */
+    static startOfWeek(date: Date, startDay?: boolean): Date;
+    /**
+     * Get end of the week
+     *
+     * @param date reference date
+     * @param endDay do we need to end with 23:59:59.999
+     * @returns start of the day in new date instance
+     */
+    static endOfWeek(date: Date, endDay?: boolean): Date;
+    /**
+     * Get start of the month
+     *
+     * @param date reference date
+     * @param startDay do we need to start with the 00:00:00
+     * @returns start of the day in new date instance
+     */
+    static startOfMonth(date: Date, startDay?: boolean): Date;
+    /**
+     * Get end of the month
+     *
+     * @param date reference date
+     * @param endDay do we need to end with 23:59:59.999
+     * @returns start of the day in new date instance
+     */
+    static endOfMonth(date: Date, endDay?: boolean): Date;
     /**
      * Converts Date to local time based ISO string
      * Example Sun Jan 23 2000 00:00:00 GMT+0100 which equals 2000-01-22T23:00:00.000Z
