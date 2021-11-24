@@ -63,7 +63,7 @@ export class DateTimeHelper {
    * Get start of the day
    *
    * @param date reference date
-   * @returns start of the day
+   * @returns start of the day in new date instance
    */
 
   public static startOfTheDay(date: Date) {
@@ -79,7 +79,7 @@ export class DateTimeHelper {
    * Get end of the day
    *
    * @param date reference date
-   * @returns end of the day
+   * @returns start of the day in new date instance
    */
 
   public static endOfTheDay(date: Date) {
@@ -89,6 +89,72 @@ export class DateTimeHelper {
     endDay.setSeconds(59);
     endDay.setMilliseconds(999);
     return endDay;
+  }
+
+  /**
+   * Get start of the week
+   *
+   * @param date reference date
+   * @param startDay do we need to start with the 00:00:00
+   * @returns start of the day in new date instance
+   */
+
+  public static startOfWeek(date: Date, startDay = true) {
+    const d = new Date(date);
+    const ddrif = d.getDay();
+    const start = new Date(d.setDate(d.getDate() - ddrif - (ddrif === 0 ? 6 : -1))); // fix as week starts with sunday.
+    if (startDay) {
+      return DateTimeHelper.startOfTheDay(start);
+    }
+    return new Date(start);
+  }
+
+  /**
+   * Get end of the week
+   *
+   * @param date reference date
+   * @param endDay do we need to end with 23:59:59.999
+   * @returns start of the day in new date instance
+   */
+
+  public static endOfWeek(date: Date, endDay = true) {
+    const d = new Date(date);
+    const ddrif = d.getDay();
+    const end = new Date(d.setDate(d.getDate() - ddrif - (ddrif === 0 ? 6 : -1) + 6)); // fix as week starts with sunday.
+    if (endDay) {
+      return DateTimeHelper.endOfTheDay(new Date(end));
+    }
+    return new Date(end);
+  }
+
+  /**
+   * Get start of the month
+   *
+   * @param date reference date
+   * @param startDay do we need to start with the 00:00:00
+   * @returns start of the day in new date instance
+   */
+  public static startOfMonth(date: Date, startDay = true) {
+    const start = new Date(date.getFullYear(), date.getMonth(), 1);
+    if (startDay) {
+      return DateTimeHelper.startOfTheDay(new Date(start));
+    }
+    return new Date(start);
+  }
+
+  /**
+   * Get end of the month
+   *
+   * @param date reference date
+   * @param endDay do we need to end with 23:59:59.999
+   * @returns start of the day in new date instance
+   */
+  public static endOfMonth(date: Date, endDay = true) {
+    const end = new Date(date.getFullYear(), date.getMonth() + 1, 0);
+    if (endDay) {
+      return DateTimeHelper.endOfTheDay(new Date(end));
+    }
+    return new Date(end);
   }
 
   /**
