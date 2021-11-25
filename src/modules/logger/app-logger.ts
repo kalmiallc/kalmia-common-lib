@@ -21,6 +21,13 @@ export interface IAppLogger {
 
 export class AppLogger {
   private static logger: IAppLogger = new StandardLogger();
+  public static setLogLevel(ll: string) {
+    if (!ll) {
+      AppLogger.logger.warn(['appLogger.ts', 'AppLogger', 'Could not set log level, as it is not defined']);
+      return;
+    }
+    this.logger.setLogLevel(ll);
+  }
   public static setLogger(logger: IAppLogger) {
     AppLogger.logger = logger;
   }
