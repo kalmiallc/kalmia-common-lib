@@ -11,6 +11,13 @@ exports.AppLogger = void 0;
 const util_1 = require("util");
 const logger_1 = require("./logger");
 class AppLogger {
+    static setLogLevel(ll) {
+        if (!ll) {
+            AppLogger.logger.warn(['appLogger.ts', 'AppLogger', 'Could not set log level, as it is not defined']);
+            return;
+        }
+        this.logger.setLogLevel(ll);
+    }
     static setLogger(logger) {
         AppLogger.logger = logger;
     }

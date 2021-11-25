@@ -15,6 +15,7 @@ export interface IAppLogger {
 }
 export declare class AppLogger {
     private static logger;
+    static setLogLevel(ll: string): void;
     static setLogger(logger: IAppLogger): void;
     static info(fileName: string, methodName: string, ...args: any[]): void;
     static debug(fileName: string, methodName: string, ...args: any[]): void;
