@@ -31,12 +31,12 @@ Repository can be accessed on `https://gallery.ecr.aws/e1l7u2n7/temporary` or `h
 Images should be deleted after. 
 
 Example of publishing image to repo:
-1. Create aws credentials profile with CLI. `aws configure --profile docker_push`
-2. Use the profile to login: `aws ecr-public get-login-password --region us-east-1 | docker login --username AWS --password-stdin public.ecr.aws/e1l7u2n7`
-3. Properly tag local image: `docker tag i5g-fe public.ecr.aws/e1l7u2n7/temporary:i5g-test-1.0`
-4. Push to public repo: `docker push public.ecr.aws/e1l7u2n7/temporary:i5g-test-1.0`
-5. List images: `aws ecr-public describe-image-tags --profile docker_push --repository-name temporary --region us-east-1`
-6. Delete image: `aws ecr-public batch-delete-image --profile docker_push --repository-name temporary --region us-east-1  --image-ids imageTag=i5g-test-1.0`
+ 1. Create aws credentials profile with CLI. `aws configure --profile docker_push`
+ 2. Use the profile to login: `aws ecr-public get-login-password --profile docker_push --region us-east-1 | docker login --username AWS --password-stdin public.ecr.aws/e1l7u2n7`
+ 3. Properly tag local image: `docker tag i5g-fe public.ecr.aws/e1l7u2n7/temporary:i5g-test-1.0`
+ 4. Push to public repo: `docker push public.ecr.aws/e1l7u2n7/temporary:i5g-test-1.0`
+ 5. List images: `aws ecr-public describe-image-tags --profile docker_push --repository-name temporary --region us-east-1`
+ 6. Delete image: `aws ecr-public batch-delete-image --profile docker_push --repository-name temporary --region us-east-1  --image-ids imageTag=i5g-test-1.0`
  
 
 The image can simply be used to pull it and test it on lab3 Portainer.  
