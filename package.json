@@ -1,6 +1,6 @@
 {
   "name": "kalmia-common-lib",
-  "version": "0.2.9",
+  "version": "0.3.0",
   "description": "Common lib for Kalmia projects",
   "main": "dist/index.js",
   "scripts": {

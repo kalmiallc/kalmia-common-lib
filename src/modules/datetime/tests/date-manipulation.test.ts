@@ -80,4 +80,10 @@ describe('Date time manipulation tests', () => {
     expect(DateTimeHelper.endOfMonth(new Date('2022-02-28T12:21:22'))).toEqual(new Date('2022-02-28T23:59:59.999'));
     expect(DateTimeHelper.endOfMonth(new Date('2022-03-06T12:21:22'))).toEqual(new Date('2022-03-31T23:59:59.999'));
   });
+
+  it('Append time to date', () => {
+    expect(DateTimeHelper.appendTimeToDate(new Date('2021-11-21T00:10:00'), '12:40:15')).toEqual(new Date('2021-11-21T12:40:15'));
+    expect(DateTimeHelper.appendTimeToDate(new Date('2021-11-20T00:10:00'), '17:40:19.522')).toEqual(new Date('2021-11-20T17:40:19.522'));
+    expect(DateTimeHelper.appendTimeToDate(new Date('2021-11-20T00:10:00'), '25:40:19')).toEqual(new Date('2021-11-21T01:40:19'));
+  });
 });

@@ -99,5 +99,13 @@ export declare class DateTimeHelper {
      * @returns converted date in iso string (no timezone)
      */
     static toISOStringNoTimezone(date: any): string;
+    /**
+     * Appends - sets time to current date
+     *
+     * @param date date to which we append time to.
+     * @param time time to be appended
+     * @returns date with appended time
+     */
+    static appendTimeToDate(date: Date, time: string): Date;
 }
 //# sourceMappingURL=date-manipulations.d.ts.map
