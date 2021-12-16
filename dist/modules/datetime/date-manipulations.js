@@ -188,6 +188,24 @@ class DateTimeHelper {
         local.setMinutes(date.getMinutes() - date.getTimezoneOffset());
         return local.toISOString().slice(0, local.toISOString().length - 1);
     }
+    /**
+     * Appends - sets time to current date
+     *
+     * @param date date to which we append time to.
+     * @param time time to be appended
+     * @returns date with appended time
+     */
+    static appendTimeToDate(date, time) {
+        const timeParts = time.split(':');
+        date.setHours(Number(timeParts[0]));
+        date.setMinutes(Number(timeParts[1]));
+        date.setSeconds(Number(timeParts[2]));
+        const ms = timeParts[2].split('.');
+        if (ms[1]) {
+            date.setMilliseconds(Number(ms[1]));
+        }
+        return date;
+    }
 }
 exports.DateTimeHelper = DateTimeHelper;
 //# sourceMappingURL=date-manipulations.js.map
