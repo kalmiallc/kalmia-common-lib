@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.env = exports.JSONParser = exports.conditionalPresenceValidator = exports.enumInclusionValidator = exports.isPlainObject = exports.DateTimeHelper = exports.StandardLogger = exports.AppLogger = exports.ApplicationEnv = exports.LogType = exports.LoggerType = void 0;
+exports.env = exports.JSONParser = exports.conditionalPresenceValidator = exports.enumInclusionValidator = exports.isPlainObject = exports.CommonUtils = exports.DateTimeHelper = exports.StandardLogger = exports.AppLogger = exports.ApplicationEnv = exports.LogType = exports.LoggerType = void 0;
 const env_1 = require("./config/env");
 Object.defineProperty(exports, "env", { enumerable: true, get: function () { return env_1.env; } });
 const types_1 = require("./config/types");
@@ -10,6 +10,7 @@ Object.defineProperty(exports, "LogType", { enumerable: true, get: function () {
 const parsers_1 = require("./modules/common/parsers");
 Object.defineProperty(exports, "JSONParser", { enumerable: true, get: function () { return parsers_1.JSONParser; } });
 const utils_1 = require("./modules/common/utils");
+Object.defineProperty(exports, "CommonUtils", { enumerable: true, get: function () { return utils_1.CommonUtils; } });
 Object.defineProperty(exports, "isPlainObject", { enumerable: true, get: function () { return utils_1.isPlainObject; } });
 const validators_1 = require("./modules/common/validators");
 Object.defineProperty(exports, "conditionalPresenceValidator", { enumerable: true, get: function () { return validators_1.conditionalPresenceValidator; } });
