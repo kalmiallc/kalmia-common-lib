@@ -41,8 +41,8 @@ function expressInColor(type, message, error) {
             color = safe_1.blue;
             break;
         case types_1.LogType.INFO:
-            bgColor = safe_1.bgGreen;
-            color = safe_1.green;
+            bgColor = safe_1.bgWhite;
+            color = safe_1.white;
             break;
         case types_1.LogType.WARN:
             bgColor = safe_1.bgYellow;
