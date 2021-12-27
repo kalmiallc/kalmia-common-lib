@@ -19,7 +19,7 @@ export const env: ICommonEnv = {
   /**
    * Log writing destination.
    */
-  LOG_TARGET: process.env['LOG_TARGET'] || 'console',
+  LOG_TARGET: process.env['LOG_TARGET'] || 'color',
   LOG_OUT_LEVEL: process.env['LOG_OUT_LEVEL'] || 'WRN',
   LOGGER_TYPE: process.env['LOGGER_TYPE'] || LoggerType.STANDARD
 };

@@ -6,6 +6,8 @@ export enum LoggerType {
 }
 
 export enum LogType {
+  TEST = 'TST',
+  DB = 'DB',
   VERBOSE = 'VBS',
   DEBUG = 'DBG',
   INFO = 'INF',

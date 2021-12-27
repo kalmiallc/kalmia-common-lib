@@ -3,6 +3,8 @@ export declare enum LoggerType {
     NEST = "NEST"
 }
 export declare enum LogType {
+    TEST = "TST",
+    DB = "DB",
     VERBOSE = "VBS",
     DEBUG = "DBG",
     INFO = "INF",

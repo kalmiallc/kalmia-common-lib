@@ -15,7 +15,8 @@ export interface IAppLogger {
   warn(args: any[]);
   debug(args: any[]);
   verbose(args: any[]);
-
+  test?(args: any[]);
+  db?(args: any[]);
   setLogLevel(ll: string);
 }
 
@@ -39,6 +40,10 @@ export class AppLogger {
     AppLogger.logger.debug([fileName, methodName, ...args]);
   }
 
+  public static db(fileName: string, methodName: string, ...args) {
+    AppLogger.logger.db([fileName, methodName, ...args]);
+  }
+
   public static trace(fileName: string, methodName: string, ...args) {
     AppLogger.logger.verbose([fileName, methodName, ...args]);
   }
@@ -52,8 +57,7 @@ export class AppLogger {
 
   // Intended for the messages form the tests
   public static test(fileName: string, methodName: string, ...args) {
-    args.unshift('[ TEST ] ');
-    AppLogger.logger.info([fileName, methodName, ...args]);
+    AppLogger.logger.test([fileName, methodName, ...args]);
   }
 
   public static stringifyObjectForLog(data: any, depth: number = 3, showHidden: boolean = false) {

@@ -27,6 +27,9 @@ class AppLogger {
     static debug(fileName, methodName, ...args) {
         AppLogger.logger.debug([fileName, methodName, ...args]);
     }
+    static db(fileName, methodName, ...args) {
+        AppLogger.logger.db([fileName, methodName, ...args]);
+    }
     static trace(fileName, methodName, ...args) {
         AppLogger.logger.verbose([fileName, methodName, ...args]);
     }
@@ -38,8 +41,7 @@ class AppLogger {
     }
     // Intended for the messages form the tests
     static test(fileName, methodName, ...args) {
-        args.unshift('[ TEST ] ');
-        AppLogger.logger.info([fileName, methodName, ...args]);
+        AppLogger.logger.test([fileName, methodName, ...args]);
     }
     static stringifyObjectForLog(data, depth = 3, showHidden = false) {
         return (0, util_1.inspect)(data, { showHidden, depth });
