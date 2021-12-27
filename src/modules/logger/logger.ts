@@ -2,9 +2,9 @@ import {
   bgBlack,
   bgBlue,
   bgCyan,
-  bgGreen,
   bgMagenta,
   bgRed,
+  bgWhite,
   bgYellow,
   black,
   blue,
@@ -59,8 +59,8 @@ function expressInColor(type: LogType, message: string, error?: Error) {
       color = blue;
       break;
     case LogType.INFO:
-      bgColor = bgGreen;
-      color = green;
+      bgColor = bgWhite;
+      color = white;
       break;
     case LogType.WARN:
       bgColor = bgYellow;
