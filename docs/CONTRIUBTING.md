@@ -74,6 +74,10 @@ Logger supports additional env variable settings:
  The logging types are defined in `src/config/types.ts`. Default is `WRN`.
  Example of controlling the log level on specific test  `LOG_OUT_LEVEL=INF npm run test -- device.e2e.test -t "Should not return device with invalid ID"`
 
+ Two special log level exists:
+ - DB - this is a verbose level log, but can be filtered out with `DB` level.
+ - TST - this is a info level log, but can be filtered out with `TST` level.
+
 
 ## Sample files
 Sample configuration files are located in the `config-samples` directory. All configuration samples (either project env or visual studio setting and lunch samples) 
