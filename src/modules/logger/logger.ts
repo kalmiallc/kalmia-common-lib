@@ -1,5 +1,21 @@
-/* eslint-disable prefer-arrow/prefer-arrow-functions */
-import { bgBlack, bgCyan, bgRed, bgWhite, bgYellow, black, cyan, gray, red, white, yellow } from 'colors/safe';
+import {
+  bgBlack,
+  bgBlue,
+  bgCyan,
+  bgGreen,
+  bgMagenta,
+  bgRed,
+  bgYellow,
+  black,
+  blue,
+  cyan,
+  gray,
+  green,
+  magenta,
+  red,
+  white,
+  yellow
+} from 'colors/safe';
 import { env } from '../../config/env';
 import { LogType } from '../../config/types';
 
@@ -26,13 +42,25 @@ function expressInColor(type: LogType, message: string, error?: Error) {
   let bgColor = bgBlack;
   let color = black;
   switch (type) {
-    case LogType.VERBOSE:
-      bgColor = bgWhite;
-      color = black;
+    case LogType.TEST:
+      bgColor = bgYellow;
+      color = green;
       break;
-    case LogType.INFO:
+    case LogType.DB:
+      bgColor = bgMagenta;
+      color = magenta;
+      break;
+    case LogType.VERBOSE:
       bgColor = bgCyan;
       color = cyan;
+      break;
+    case LogType.DEBUG:
+      bgColor = bgBlue;
+      color = blue;
+      break;
+    case LogType.INFO:
+      bgColor = bgGreen;
+      color = green;
       break;
     case LogType.WARN:
       bgColor = bgYellow;
@@ -64,22 +92,43 @@ function writeLog(type: LogType, message: string, error?: Error, loglevel?: stri
 
   // filter out log level
   if (loglevel === LogType.ERROR) {
-    if (type === LogType.DEBUG || type === LogType.VERBOSE || type === LogType.WARN || type === LogType.INFO) {
+    if (
+      type === LogType.DEBUG ||
+      type === LogType.VERBOSE ||
+      type === LogType.WARN ||
+      type === LogType.INFO ||
+      type === LogType.TEST ||
+      type === LogType.DB
+    ) {
       return;
     }
   }
   if (loglevel === LogType.INFO || loglevel === LogType.ERROR) {
-    if (type === LogType.DEBUG || type === LogType.VERBOSE || type === LogType.WARN) {
+    if (type === LogType.DEBUG || type === LogType.VERBOSE || type === LogType.WARN || type === LogType.DB) {
       return;
     }
   }
   if (loglevel === LogType.WARN || loglevel === LogType.INFO || loglevel === LogType.ERROR) {
-    if (type === LogType.DEBUG || type === LogType.VERBOSE) {
+    if (type === LogType.DEBUG || type === LogType.VERBOSE || type === LogType.DB) {
       return;
     }
   }
   if (loglevel === LogType.DEBUG) {
     if (type === LogType.VERBOSE) {
+      return;
+    }
+  }
+
+  if (loglevel === LogType.DB) {
+    const allTypes = Object.values(LogType).filter((k) => k !== LogType.DB);
+    if (allTypes.find((x) => x === type)) {
+      return;
+    }
+  }
+
+  if (loglevel === LogType.TEST) {
+    const allTypes = Object.values(LogType).filter((m) => m !== LogType.TEST);
+    if (allTypes.find((x) => x === type)) {
       return;
     }
   }
@@ -91,7 +140,14 @@ function writeLog(type: LogType, message: string, error?: Error, loglevel?: stri
   }
 }
 
-// console logger is the default logger
+/**
+ * Standard logger. This logger uses common logging methods with addition to test and db methods.
+ * Test method runs on [INF] level, providing additional [ TEST ] argument.
+ * DB method runs on [VERBOSE] level, providing additional [ DB ] argument.
+ *
+ * Both test and db level can be filtered regardless of the level, but be included in corresponding levels.
+ *
+ */
 export class StandardLogger {
   private loglevel: string;
   public setLogLevel(ll: string) {
@@ -143,6 +199,16 @@ export class StandardLogger {
     args.unshift('[ TEST ] ');
     const location = `[${fileName}/${methodName}]`;
     args.push(location);
-    writeLog(LogType.INFO, args.join(' '), null, this.loglevel);
+    writeLog(LogType.TEST, args.join(' '), null, this.loglevel);
+  }
+
+  // Intended for the messages form the db
+  public db(args: any[]) {
+    const fileName = args.shift();
+    const methodName = args.shift();
+    args.unshift('[ DB ] ');
+    const location = `[${fileName}/${methodName}]`;
+    args.push(location);
+    writeLog(LogType.DB, args.join(' '), null, this.loglevel);
   }
 }

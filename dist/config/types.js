@@ -9,6 +9,8 @@ var LoggerType;
 })(LoggerType = exports.LoggerType || (exports.LoggerType = {}));
 var LogType;
 (function (LogType) {
+    LogType["TEST"] = "TST";
+    LogType["DB"] = "DB";
     LogType["VERBOSE"] = "VBS";
     LogType["DEBUG"] = "DBG";
     LogType["INFO"] = "INF";

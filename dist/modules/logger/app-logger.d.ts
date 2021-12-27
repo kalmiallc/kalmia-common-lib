@@ -11,6 +11,8 @@ export interface IAppLogger {
     warn(args: any[]): any;
     debug(args: any[]): any;
     verbose(args: any[]): any;
+    test?(args: any[]): any;
+    db?(args: any[]): any;
     setLogLevel(ll: string): any;
 }
 export declare class AppLogger {
@@ -19,6 +21,7 @@ export declare class AppLogger {
     static setLogger(logger: IAppLogger): void;
     static info(fileName: string, methodName: string, ...args: any[]): void;
     static debug(fileName: string, methodName: string, ...args: any[]): void;
+    static db(fileName: string, methodName: string, ...args: any[]): void;
     static trace(fileName: string, methodName: string, ...args: any[]): void;
     static warn(fileName: string, methodName: string, ...args: any[]): void;
     static error(fileName: string, methodName: string, ...args: any[]): void;
