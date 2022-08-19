@@ -24,21 +24,17 @@ function currentDateTime() {
   return currDate.toLocaleString('sl-SI') + '.' + currDate.getMilliseconds();
 }
 
-function expressInConsole(type: LogType, message: string, error?: Error) {
-  message = `${typeof message == 'string' ? message : JSON.stringify(message, null, 2)}${message && error && error.message ? ', ' : ''}${
-    error ? `${error.message}` || '' : ''
-  }`;
-
+function expressInConsole(type: LogType, message: any, location: string) {
   if (type === LogType.ERROR) {
-    console.error(`[${type}][${currentDateTime()}]: ${message}`);
+    console.error(`[${type}][${currentDateTime()}][${location}]: `, message);
   } else if (type === LogType.WARN) {
-    console.warn(`[${type}][${currentDateTime()}]: ${message}`);
+    console.warn(`[${type}][${currentDateTime()}][${location}]: `, message);
   } else {
-    console.log(`[${type}][${currentDateTime()}]: ${message}`);
+    console.log(`[${type}][${currentDateTime()}][${location}]: `, message);
   }
 }
 
-function expressInColor(type: LogType, message: string, error?: Error) {
+function expressInColor(type: LogType, message: any, location: string) {
   let bgColor = bgBlack;
   let color = black;
   switch (type) {
@@ -74,18 +70,11 @@ function expressInColor(type: LogType, message: string, error?: Error) {
       bgColor = bgBlack;
       color = white;
   }
-  console.log(
-    bgColor(black(`[${type}]`)),
-    gray(`[${currentDateTime()}]:`),
-    color(
-      `${typeof message == 'string' ? message : JSON.stringify(message, null, 2)}${message && error && error.message ? ', ' : ''}${
-        error ? `${error.message}` || '' : ''
-      }`
-    )
-  );
+
+  console.log(bgColor(black(`[${type}]`)), gray(`[${currentDateTime()}][${location}]:`), color(message));
 }
 
-function writeLog(type: LogType, message: string, error?: Error, loglevel?: string): void {
+function writeLog(type: LogType, message: any, location: string, loglevel?: string): void {
   if (!loglevel) {
     loglevel = env.LOG_OUT_LEVEL;
   }
@@ -134,9 +123,9 @@ function writeLog(type: LogType, message: string, error?: Error, loglevel?: stri
   }
 
   if (env.LOG_TARGET == 'color') {
-    expressInColor(type, message, error);
+    expressInColor(type, message, location);
   } else if (env.LOG_TARGET == 'console') {
-    expressInConsole(type, message, error);
+    expressInConsole(type, message, location);
   }
 }
 
@@ -157,39 +146,34 @@ export class StandardLogger {
   public info(args: any[]) {
     const fileName = args.shift();
     const methodName = args.shift();
-    const location = `[${fileName}/${methodName}]`;
-    args.push(location);
-    writeLog(LogType.INFO, args.join(', '), null, this.loglevel);
+    const location = `${fileName}/${methodName}`;
+    writeLog(LogType.INFO, args, location, this.loglevel);
   }
   public debug(args: any[]) {
     const fileName = args.shift();
     const methodName = args.shift();
-    const location = `[${fileName}/${methodName}]`;
-    args.push(location);
-    writeLog(LogType.DEBUG, args.join(' '), null, this.loglevel);
+    const location = `${fileName}/${methodName}`;
+    writeLog(LogType.DEBUG, args, location, this.loglevel);
   }
 
   public verbose(args: any[]) {
     const fileName = args.shift();
     const methodName = args.shift();
-    const location = `[${fileName}/${methodName}]`;
-    args.push(location);
-    writeLog(LogType.VERBOSE, args.join(' '), null, this.loglevel);
+    const location = `${fileName}/${methodName}`;
+    writeLog(LogType.VERBOSE, args, location, this.loglevel);
   }
 
   public warn(args: any[]) {
     const fileName = args.shift();
     const methodName = args.shift();
-    const location = `[${fileName}/${methodName}]`;
-    args.push(location);
-    writeLog(LogType.WARN, args.join(' '), null, this.loglevel);
+    const location = `${fileName}/${methodName}`;
+    writeLog(LogType.WARN, args, location, this.loglevel);
   }
   public error(args: any[]) {
     const fileName = args.shift();
     const methodName = args.shift();
-    const location = `[${fileName}/${methodName}]`;
-    args.push(location);
-    writeLog(LogType.ERROR, args.join(' '), null, this.loglevel);
+    const location = `${fileName}/${methodName}`;
+    writeLog(LogType.ERROR, args, location, this.loglevel);
   }
 
   // Intended for the messages form the tests
@@ -197,9 +181,8 @@ export class StandardLogger {
     const fileName = args.shift();
     const methodName = args.shift();
     args.unshift('[ TEST ] ');
-    const location = `[${fileName}/${methodName}]`;
-    args.push(location);
-    writeLog(LogType.TEST, args.join(' '), null, this.loglevel);
+    const location = `${fileName}/${methodName}`;
+    writeLog(LogType.TEST, args, location, this.loglevel);
   }
 
   // Intended for the messages form the db
@@ -207,8 +190,7 @@ export class StandardLogger {
     const fileName = args.shift();
     const methodName = args.shift();
     args.unshift('[ DB ] ');
-    const location = `[${fileName}/${methodName}]`;
-    args.push(location);
-    writeLog(LogType.DB, args.join(' '), null, this.loglevel);
+    const location = `${fileName}/${methodName}`;
+    writeLog(LogType.DB, args, location, this.loglevel);
   }
 }

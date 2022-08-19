@@ -79,6 +79,14 @@ Logger supports additional env variable settings:
  - TST - this is a info level log, but can be filtered out with `TST` level.
 
 
+### DB logger
+DbLogger logger logs to DB. The proper table must be created in the DB. Check the migration scripts in the [kalmia-sql-lib](https://bitbucket.org/kalmiadevs/kalmia-sql-lib).
+
+Instance is used the same way as the AppLogger, but with additional methods:
+- `logRequest` for logging the request data
+- `logWorker` for logging worker data
+ 
+
 ## Sample files
 Sample configuration files are located in the `config-samples` directory. All configuration samples (either project env or visual studio setting and lunch samples) 
 shall be put in this directory.

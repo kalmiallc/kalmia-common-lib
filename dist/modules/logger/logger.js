@@ -8,19 +8,18 @@ function currentDateTime() {
     const currDate = new Date();
     return currDate.toLocaleString('sl-SI') + '.' + currDate.getMilliseconds();
 }
-function expressInConsole(type, message, error) {
-    message = `${typeof message == 'string' ? message : JSON.stringify(message, null, 2)}${message && error && error.message ? ', ' : ''}${error ? `${error.message}` || '' : ''}`;
+function expressInConsole(type, message, location) {
     if (type === types_1.LogType.ERROR) {
-        console.error(`[${type}][${currentDateTime()}]: ${message}`);
+        console.error(`[${type}][${currentDateTime()}][${location}]: `, message);
     }
     else if (type === types_1.LogType.WARN) {
-        console.warn(`[${type}][${currentDateTime()}]: ${message}`);
+        console.warn(`[${type}][${currentDateTime()}][${location}]: `, message);
     }
     else {
-        console.log(`[${type}][${currentDateTime()}]: ${message}`);
+        console.log(`[${type}][${currentDateTime()}][${location}]: `, message);
     }
 }
-function expressInColor(type, message, error) {
+function expressInColor(type, message, location) {
     let bgColor = safe_1.bgBlack;
     let color = safe_1.black;
     switch (type) {
@@ -56,9 +55,9 @@ function expressInColor(type, message, error) {
             bgColor = safe_1.bgBlack;
             color = safe_1.white;
     }
-    console.log(bgColor((0, safe_1.black)(`[${type}]`)), (0, safe_1.gray)(`[${currentDateTime()}]:`), color(`${typeof message == 'string' ? message : JSON.stringify(message, null, 2)}${message && error && error.message ? ', ' : ''}${error ? `${error.message}` || '' : ''}`));
+    console.log(bgColor((0, safe_1.black)(`[${type}]`)), (0, safe_1.gray)(`[${currentDateTime()}][${location}]:`), color(message));
 }
-function writeLog(type, message, error, loglevel) {
+function writeLog(type, message, location, loglevel) {
     if (!loglevel) {
         loglevel = env_1.env.LOG_OUT_LEVEL;
     }
@@ -101,10 +100,10 @@ function writeLog(type, message, error, loglevel) {
         }
     }
     if (env_1.env.LOG_TARGET == 'color') {
-        expressInColor(type, message, error);
+        expressInColor(type, message, location);
     }
     else if (env_1.env.LOG_TARGET == 'console') {
-        expressInConsole(type, message, error);
+        expressInConsole(type, message, location);
     }
 }
 /**
@@ -122,55 +121,48 @@ class StandardLogger {
     info(args) {
         const fileName = args.shift();
         const methodName = args.shift();
-        const location = `[${fileName}/${methodName}]`;
-        args.push(location);
-        writeLog(types_1.LogType.INFO, args.join(', '), null, this.loglevel);
+        const location = `${fileName}/${methodName}`;
+        writeLog(types_1.LogType.INFO, args, location, this.loglevel);
     }
     debug(args) {
         const fileName = args.shift();
         const methodName = args.shift();
-        const location = `[${fileName}/${methodName}]`;
-        args.push(location);
-        writeLog(types_1.LogType.DEBUG, args.join(' '), null, this.loglevel);
+        const location = `${fileName}/${methodName}`;
+        writeLog(types_1.LogType.DEBUG, args, location, this.loglevel);
     }
     verbose(args) {
         const fileName = args.shift();
         const methodName = args.shift();
-        const location = `[${fileName}/${methodName}]`;
-        args.push(location);
-        writeLog(types_1.LogType.VERBOSE, args.join(' '), null, this.loglevel);
+        const location = `${fileName}/${methodName}`;
+        writeLog(types_1.LogType.VERBOSE, args, location, this.loglevel);
     }
     warn(args) {
         const fileName = args.shift();
         const methodName = args.shift();
-        const location = `[${fileName}/${methodName}]`;
-        args.push(location);
-        writeLog(types_1.LogType.WARN, args.join(' '), null, this.loglevel);
+        const location = `${fileName}/${methodName}`;
+        writeLog(types_1.LogType.WARN, args, location, this.loglevel);
     }
     error(args) {
         const fileName = args.shift();
         const methodName = args.shift();
-        const location = `[${fileName}/${methodName}]`;
-        args.push(location);
-        writeLog(types_1.LogType.ERROR, args.join(' '), null, this.loglevel);
+        const location = `${fileName}/${methodName}`;
+        writeLog(types_1.LogType.ERROR, args, location, this.loglevel);
     }
     // Intended for the messages form the tests
     test(args) {
         const fileName = args.shift();
         const methodName = args.shift();
         args.unshift('[ TEST ] ');
-        const location = `[${fileName}/${methodName}]`;
-        args.push(location);
-        writeLog(types_1.LogType.TEST, args.join(' '), null, this.loglevel);
+        const location = `${fileName}/${methodName}`;
+        writeLog(types_1.LogType.TEST, args, location, this.loglevel);
     }
     // Intended for the messages form the db
     db(args) {
         const fileName = args.shift();
         const methodName = args.shift();
         args.unshift('[ DB ] ');
-        const location = `[${fileName}/${methodName}]`;
-        args.push(location);
-        writeLog(types_1.LogType.DB, args.join(' '), null, this.loglevel);
+        const location = `${fileName}/${methodName}`;
+        writeLog(types_1.LogType.DB, args, location, this.loglevel);
     }
 }
 exports.StandardLogger = StandardLogger;
