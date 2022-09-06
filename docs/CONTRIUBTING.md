@@ -34,6 +34,12 @@ Libraries are linked with `git+ssh`. Refer to the [Linking the package dependenc
 
 The `git+ssh` will use the package deployed on master. Please note that the packages must be provided with the built dist folder (prepared code). 
 
+
+### Library update
+The library is committed with the build files. Before we make it available, a build must be done.
+For the version tracking, we use git tag, which must be in line with the package version.
+
+
 ## Modules 
 Structure of every package is separated into modules. Module also contains tests for that module. One module should represent one closed functionally. For example all things concerning logging shall be in the logging module. 
 The common module shall contain all the common helper functions, common errors (exceptions), common tools.
