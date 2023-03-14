@@ -1,0 +1,3 @@
+[submodule "kalmia-common-doc"]
+	path = kalmia-common-doc
+	url = git@bitbucket.org:kalmiadevs/kalmia-common-doc.git
