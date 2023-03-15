@@ -1,5 +1,21 @@
 /**
  * Validates if value is inside enumerator
+
+ * @param enumerator to be validated
+ * @param allowNull if true, null and undefined values will be considered valid
+ * @returns True if value is inside enumerator
+ * @example
+ * enum MyEnum {
+ *  A = 'A',
+ *  B = 'B',
+ *  C = 'C'
+ * }
+ * const validator = enumInclusionValidator(MyEnum);
+ * validator('A'); // true
+ * validator('D'); // false
+ * validator(null); // false
+ * validator(undefined); // false
+ *   
  */
 export function enumInclusionValidator(enumerator: any, allowNull = false) {
   return function (value: any) {
