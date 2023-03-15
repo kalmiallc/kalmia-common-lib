@@ -1,0 +1,53 @@
+version: "3.4"
+services:
+  app:
+    image: nagode-api
+    environment:
+      - VIRTUAL_HOST=${VIRTUAL_HOST}
+      - LETSENCRYPT_HOST=${LETSENCRYPT_HOST}
+      - LETSENCRYPT_EMAIL=${LETSENCRYPT_EMAIL}
+      - VIRTUAL_PORT=${VIRTUAL_PORT}
+      - APP_ENV=${APP_ENV}
+      - APP_SECRET=${APP_SECRET}
+      - APP_URL=${APP_URL}
+      - API_HOST=${API_HOST}
+      - API_PORT=${API_PORT}
+      - MYSQL_HOST=${MYSQL_HOST}
+      - MYSQL_PORT=${MYSQL_PORT}
+      - MYSQL_DB=${MYSQL_DB}
+      - MYSQL_USER=${MYSQL_USER}
+      - MYSQL_PASSWORD=${MYSQL_PASSWORD}
+      - MYSQL_POOL=${MYSQL_POOL}
+      - PAGE_DEFAULT_LIMIT=${PAGE_DEFAULT_LIMIT}
+      - PAGE_MAX_LIMIT=${PAGE_MAX_LIMIT}
+      - SMTP_HOST=${SMTP_HOST}
+      - SMTP_PORT=${SMTP_PORT}
+      - SMTP_USERNAME=${SMTP_USERNAME}
+      - SMTP_PASSWORD=${SMTP_PASSWORD}
+      - SMTP_EMAIL_FROM=${SMTP_EMAIL_FROM}
+      - SMTP_NAME_FROM=${SMTP_NAME_FROM}
+      - AWS_S3_KEY=${AWS_S3_KEY}
+      - AWS_S3_SECRET=${AWS_S3_SECRET}
+      - AWS_REG=${AWS_REG}
+      - AWS_S3_BUCKET=${AWS_S3_BUCKET}
+      - AWS_S3_ENDPOINT=${AWS_S3_ENDPOINT}
+      - AWS_WORKER_LAMBDA_NAME=${AWS_WORKER_LAMBDA_NAME}
+      - AWS_WORKER_SQS_URL=${AWS_WORKER_SQS_URL}
+      - NODE_ENV=${NODE_ENV}
+      - APP_CORS_DOMAINS=${APP_CORS_DOMAINS}
+    networks:
+      - frontend
+      - backend
+    volumes: 
+      - logs:${VOLUME_LOGS}
+    restart: unless-stopped
+
+networks:
+  frontend:
+    external: true
+  backend:
+    external: true
+
+volumes:
+  logs:
+    driver: local

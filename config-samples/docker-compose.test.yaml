@@ -1,0 +1,53 @@
+version: '3.5'
+services:
+  api:
+    image: sample-base-api
+    env_file: 
+      - .env.test
+    build:
+      context: .
+      target: build
+      args:
+        - AUTH_REPO_ACCESS_KEY
+    command: sh -c "npm run test"
+    environment:
+      - APP_ENV=testing
+      - MYSQL_DB_TEST=$MYSQL_DB_TEST
+      - MYSQL_PORT_TEST=$MYSQL_PORT_TEST
+      - MYSQL_HOST_TEST=mysqldb
+      - MYSQL_USER_TEST=$MYSQL_USER_TEST
+      - APP_PORT=5555
+      - AWS_S3_ENDPOINT=http://s3:9010
+      - AWS_S3_KEY_TEST=$AWS_S3_KEY_TEST
+      - AWS_S3_SECRET_TEST=$AWS_S3_SECRET_TEST
+      - AWS_S3_BUCKET_TEST=$AWS_S3_BUCKET_TEST
+      - LOG_TARGET=$LOG_TARGET
+    depends_on:
+      - mysqldb
+      - s3
+    ports:
+      - "4445:4445"
+  mysqldb:
+    image: mysql
+    env_file: 
+      - .env.test
+    command: --default-authentication-plugin=mysql_native_password
+    environment:
+      - MYSQL_ROOT_PASSWORD=$MYSQL_PASSWORD_TEST
+      - MYSQL_DATABASE=$MYSQL_DB_TEST
+      - MYSQL_HOST=0.0.0.0
+      - MYSQL_TCP_PORT=$MYSQL_PORT_TEST
+    ports:
+      - '$MYSQL_PORT_TEST:$MYSQL_PORT_TEST'
+  s3:
+    image: minio/minio
+    env_file: 
+      - .env.test
+    command: server /data --address ":9010" --console-address ":9011"
+    environment:
+      - MINIO_ROOT_USER=$AWS_S3_KEY_TEST
+      - MINIO_ROOT_PASSWORD=$AWS_S3_SECRET_TEST
+    ports:
+      - "9010:9010"
+      - "9011:9011"
+
