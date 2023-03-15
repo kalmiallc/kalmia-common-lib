@@ -1,8 +1,14 @@
 # Kalmia Auth API
+
 This package contains common elements and documentation used in Kalmia projects.
+
+## Public branch
+
+This library also contains public branch. The public branch is separated for the internal and resides in the github. 
 
 
 ## Resources
+
 The common documentation is contained in this project: 
 
 | Resource                             | Description                                                           |
