@@ -5,7 +5,8 @@ This package contains common elements and documentation used in Kalmia projects.
 ## Public branch
 
 This library also contains public branch. The public branch is separated for the internal and resides in the github. 
-
+The public branch is a separate non-related branch. To commit changes to public branch, each commit must be cherry-picked.
+Don't use the merge-feature as it will also move some private keys to the public.
 
 ## Resources
 
