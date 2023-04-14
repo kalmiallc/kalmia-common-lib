@@ -1,6 +1,6 @@
 {
   "name": "kalmia-common-lib",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Common lib for Kalmia projects",
   "main": "dist/index.js",
   "scripts": {
@@ -47,9 +47,9 @@
     "colors": "1.4.0"
   },
   "peerDependencies": {
-    "dotenv": "^10.0.0",
-    "rimraf": "^3.0.2",
-    "ts-node": "^10.1.0",
-    "typescript": "^4.3.5"
+    "dotenv": "^16.0.3",
+    "rimraf": "^5.0.0",
+    "ts-node": "^10.9.1",
+    "typescript": "^5.0.4"
   }
 }
