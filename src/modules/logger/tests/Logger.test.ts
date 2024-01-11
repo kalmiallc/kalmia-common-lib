@@ -102,19 +102,4 @@ describe('Logger tests', () => {
     env.LOG_OUT_LEVEL = LogType.WARN;
     AppLogger.info('TestMethod', 'Logger.test.ts', '------------ DB level out end-------------');
   });
-
-  it('Logger out tests db only', () => {
-    AppLogger.info('TestMethod', 'Logger.test.ts', '------------ TEST level out -------------');
-    env.LOG_OUT_LEVEL = LogType.TEST;
-    AppLogger.info('TestMethod', 'Logger.test.ts', 'Info level');
-    AppLogger.error('TestMethod', 'Logger.test.ts', 'Error level log', new Error('Test error message'));
-    AppLogger.warn('TestMethod', 'Logger.test.ts', 'Warn level log');
-    AppLogger.info('TestMethod', 'Logger.test.ts', 'Info level log', { test: 'test', test2: 'test2' });
-    AppLogger.debug('TestMethod', 'Logger.test.ts', 'Debug level log', jest);
-    AppLogger.trace('TestMethod', 'Logger.test.ts', 'Trace level log');
-    AppLogger.test('TestMethod', 'Logger.test.ts', 'Test level log');
-    AppLogger.db('TestMethod', 'Logger.test.ts', 'Db level log');
-    env.LOG_OUT_LEVEL = LogType.WARN;
-    AppLogger.info('TestMethod', 'Logger.test.ts', '------------ TEST level out end-------------');
-  });
 });

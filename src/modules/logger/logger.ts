@@ -103,7 +103,7 @@ function writeLog(type: LogType, message: any, location: string, loglevel?: stri
     }
   }
   if (loglevel === LogType.DEBUG) {
-    if (type === LogType.VERBOSE) {
+    if (type === LogType.VERBOSE || type === LogType.DB) {
       return;
     }
   }
