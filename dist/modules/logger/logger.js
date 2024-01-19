@@ -83,7 +83,7 @@ function writeLog(type, message, location, loglevel) {
         }
     }
     if (loglevel === types_1.LogType.DEBUG) {
-        if (type === types_1.LogType.VERBOSE) {
+        if (type === types_1.LogType.VERBOSE || type === types_1.LogType.DB) {
             return;
         }
     }
