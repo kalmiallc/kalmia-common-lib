@@ -6,7 +6,7 @@ var LoggerType;
 (function (LoggerType) {
     LoggerType["STANDARD"] = "STD";
     LoggerType["NEST"] = "NEST";
-})(LoggerType = exports.LoggerType || (exports.LoggerType = {}));
+})(LoggerType || (exports.LoggerType = LoggerType = {}));
 var LogType;
 (function (LogType) {
     LogType["TEST"] = "TST";
@@ -16,7 +16,7 @@ var LogType;
     LogType["INFO"] = "INF";
     LogType["WARN"] = "WRN";
     LogType["ERROR"] = "ERR";
-})(LogType = exports.LogType || (exports.LogType = {}));
+})(LogType || (exports.LogType = LogType = {}));
 /**
  * List of possible applications run environments.
  */
@@ -26,5 +26,5 @@ var ApplicationEnv;
     ApplicationEnv["DEV"] = "development";
     ApplicationEnv["STG"] = "staging";
     ApplicationEnv["PROD"] = "production";
-})(ApplicationEnv = exports.ApplicationEnv || (exports.ApplicationEnv = {}));
+})(ApplicationEnv || (exports.ApplicationEnv = ApplicationEnv = {}));
 //# sourceMappingURL=types.js.map

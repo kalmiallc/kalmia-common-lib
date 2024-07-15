@@ -1,6 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.CommonUtils = exports.isPlainObject = void 0;
+exports.CommonUtils = void 0;
+exports.isPlainObject = isPlainObject;
 /**
  * Tells if tested variable is plain object.
  *
@@ -13,7 +14,6 @@ function isPlainObject(testVar) {
     }
     return true;
 }
-exports.isPlainObject = isPlainObject;
 class CommonUtils {
     /**
      * Tells if tested variable is plain object.
