@@ -72,18 +72,18 @@ function writeLog(type, message, location, loglevel) {
             return;
         }
     }
-    if (loglevel === types_1.LogType.INFO || loglevel === types_1.LogType.ERROR) {
-        if (type === types_1.LogType.DEBUG || type === types_1.LogType.VERBOSE || type === types_1.LogType.WARN || type === types_1.LogType.DB) {
-            return;
-        }
-    }
-    if (loglevel === types_1.LogType.WARN || loglevel === types_1.LogType.INFO || loglevel === types_1.LogType.ERROR) {
+    if (loglevel === types_1.LogType.INFO) {
         if (type === types_1.LogType.DEBUG || type === types_1.LogType.VERBOSE || type === types_1.LogType.DB) {
             return;
         }
     }
+    if (loglevel === types_1.LogType.WARN) {
+        if (type === types_1.LogType.DEBUG || type === types_1.LogType.VERBOSE || type === types_1.LogType.INFO || type === types_1.LogType.DB) {
+            return;
+        }
+    }
     if (loglevel === types_1.LogType.DEBUG) {
-        if (type === types_1.LogType.VERBOSE || type === types_1.LogType.DB) {
+        if (type === types_1.LogType.VERBOSE) {
             return;
         }
     }

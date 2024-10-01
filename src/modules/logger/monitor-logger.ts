@@ -31,7 +31,7 @@ export enum MonitorLogType {
   TEST = 'TEST'
 }
 
-interface LogPayload {
+export interface MonitorLogPayload {
   logType: MonitorLogType;
   methodName: string;
   message: string;
@@ -252,7 +252,7 @@ export class MonitorLogger {
     this.logToMonitor(payload);
   }
 
-  private async logToMonitor(payload: LogPayload) {
+  private async logToMonitor(payload: MonitorLogPayload) {
     if (!allowLog(payload.logType, this.logLevel)) {
       return;
     }
