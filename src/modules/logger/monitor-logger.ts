@@ -110,18 +110,18 @@ function allowLog(type: MonitorLogType, logLevel?: string) {
       return false;
     }
   }
-  if (logLevel === MonitorLogType.INFO || logLevel === MonitorLogType.ERROR) {
-    if (type === MonitorLogType.DEBUG || type === MonitorLogType.VERBOSE || type === MonitorLogType.WARN || type === MonitorLogType.DB) {
+  if (logLevel === MonitorLogType.INFO) {
+    if (type === MonitorLogType.DEBUG || type === MonitorLogType.VERBOSE) {
       return false;
     }
   }
-  if (logLevel === MonitorLogType.WARN || logLevel === MonitorLogType.INFO || logLevel === MonitorLogType.ERROR) {
-    if (type === MonitorLogType.DEBUG || type === MonitorLogType.VERBOSE || type === MonitorLogType.DB) {
+  if (logLevel === MonitorLogType.WARN) {
+    if (type === MonitorLogType.DEBUG || type === MonitorLogType.VERBOSE) {
       return false;
     }
   }
   if (logLevel === MonitorLogType.DEBUG) {
-    if (type === MonitorLogType.VERBOSE || type === MonitorLogType.DB) {
+    if (type === MonitorLogType.VERBOSE) {
       return false;
     }
   }
@@ -144,7 +144,7 @@ function allowLog(type: MonitorLogType, logLevel?: string) {
 }
 
 function writeLogToConsole(type: MonitorLogType, message: any, location: string, logLevel?: string): void {
-  const logToConsole: boolean = env.K_MONITOR_NO_CONSOLE?.toLowerCase() !== 'true';
+  const logToConsole: boolean = !env.K_MONITOR_NO_CONSOLE;
 
   if (!allowLog(type, logLevel) || !logToConsole) {
     return;
@@ -152,14 +152,24 @@ function writeLogToConsole(type: MonitorLogType, message: any, location: string,
 
   if (env.LOG_TARGET == 'color') {
     expressInColor(type, message, location);
-  } else if (env.LOG_TARGET == 'console') {
+  } else {
     expressInConsole(type, message, location);
   }
 }
 
 /**
- * Standard logger. This logger uses common logging methods with addition to test and db methods.
- * Test method runs on [INF] level, providing additional [ TEST ] argument.
+ * Monitoring logger. This logger uses common logging methods with addition to test and db methods.
+ *
+ * Logs are sent via API to Kalmia Monitoring service. It requires K_MONITOR_API_KEY and K_MONITOR_API_SECRET env variables to be set.
+ *
+ * Additional env variables:
+ *  * K_MONITOR_API_URL - override default API URL
+ *  * K_MONITOR_DISABLE_API - if 'true' logs will not be sent to server.
+ *  * K_MONITOR_NO_CONSOLE - logs will only be sent to server, without printing to console
+ *  * K_MONITOR_LOG_LEVEL - default log level
+ *  * LOG_TARGET - "color"/"console"/"none" - controlling output of logs to console
+ *
+ * Test method runs on [INF] level, providing additional [ TEST ] argument and is not send to monitoring API.
  * DB method runs on [VERBOSE] level, providing additional [ DB ] argument.
  *
  * Both test and db level can be filtered regardless of the level, but be included in corresponding levels.
@@ -169,13 +179,12 @@ export class MonitorLogger {
   private apiUrl: string = env.K_MONITOR_API_URL || 'https://api.monitor.kalmia.si';
   private apiKey: string = env.K_MONITOR_API_KEY || '';
   private apiSecret: string = env.K_MONITOR_API_SECRET || '';
-  private disableApi: boolean = env.K_MONITOR_DISABLE_API?.toLowerCase() === 'true';
+  private disableApi: boolean = env.K_MONITOR_DISABLE_API;
   // private debug: boolean = env.K_MONITOR_DEBUG?.toLowerCase() === 'true';
-
   // private logReqToConsole: boolean = env.K_MONITOR_LOG_REQ_TO_CONSOLE?.toLowerCase() === 'true';
 
-  private logLevel: string;
-  public setLogLevel(ll: string) {
+  private logLevel: MonitorLogType;
+  public setLogLevel(ll: MonitorLogType) {
     this.logLevel = ll;
   }
 

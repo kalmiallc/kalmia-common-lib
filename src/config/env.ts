@@ -11,7 +11,8 @@ export interface ICommonEnv {
   K_MONITOR_API_URL: string;
   K_MONITOR_API_KEY: string;
   K_MONITOR_API_SECRET: string;
-  K_MONITOR_DISABLE_API: string;
+  K_MONITOR_DISABLE_API: boolean;
+  K_MONITOR_NO_CONSOLE: boolean;
 }
 
 /**
@@ -35,5 +36,6 @@ export const env: ICommonEnv = {
   K_MONITOR_API_URL: process.env['K_MONITOR_API_URL'],
   K_MONITOR_API_KEY: process.env['K_MONITOR_API_KEY'],
   K_MONITOR_API_SECRET: process.env['K_MONITOR_API_SECRET'],
-  K_MONITOR_DISABLE_API: process.env['K_MONITOR_DISABLE_API']
+  K_MONITOR_DISABLE_API: process.env['K_MONITOR_DISABLE_API']?.toLowerCase() === 'true',
+  K_MONITOR_NO_CONSOLE: process.env['K_MONITOR_NO_CONSOLE']?.toLowerCase() === 'true'
 };
