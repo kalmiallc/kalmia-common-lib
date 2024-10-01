@@ -11,6 +11,7 @@ export interface IMonitorLogger {
   db?(params: IMonitorLogParams): void;
   cost?(params: IMonitorLogParams): void;
   setLogLevel(ll: MonitorLogType): void;
+  request(payload: IMonitorRequestLogParams): void;
 }
 
 export interface IMonitorLogParams {
@@ -18,9 +19,28 @@ export interface IMonitorLogParams {
   message: string;
   location?: string;
   requestId?: string;
-  userId?: string;
+  userId?: string | number;
   data?: any;
   tags?: string[];
+}
+
+export interface IMonitorRequestLogParams {
+  status: number;
+  method: string;
+  url: string;
+  requestId?: string;
+  apiName?: string;
+  host?: string;
+  origin?: string;
+  referer?: string;
+  ip?: string;
+  country?: string;
+  endpoint?: string;
+  userAgent?: string;
+  body?: string;
+  responseTime?: number;
+  userId?: string | number;
+  projectId?: string;
 }
 
 /**
@@ -253,5 +273,9 @@ export class AppMonitor {
 
   public static overrideLevel(level: MonitorLogType) {
     this.logger.setLogLevel(level);
+  }
+
+  public static sendRequest(payload: IMonitorRequestLogParams) {
+    this.logger.request(payload);
   }
 }

@@ -17,7 +17,7 @@ import {
   yellow
 } from 'colors/safe';
 import { env } from '../../config/env';
-import { IMonitorLogParams } from './app-monitor';
+import { IMonitorLogParams, IMonitorRequestLogParams } from './app-monitor';
 
 export enum MonitorLogType {
   DB = 'DB',
@@ -37,10 +37,30 @@ export interface MonitorLogPayload {
   message: string;
   location?: string;
   requestId?: string;
-  userId?: string;
+  userId?: string | number;
   data?: any;
   timestamp?: Date;
   tags?: string[];
+}
+
+export interface MonitorRequestLogPayload {
+  status: number;
+  method: string;
+  url: string;
+  requestId?: string;
+  apiName?: string;
+  host?: string;
+  origin?: string;
+  referer?: string;
+  ip?: string;
+  country?: string;
+  endpoint?: string;
+  userAgent?: string;
+  body?: string;
+  responseTime?: number;
+  userId?: string | number;
+  projectId?: string;
+  timestamp?: Date;
 }
 
 function currentDateTime() {
@@ -250,6 +270,18 @@ export class MonitorLogger {
       ...params
     };
     this.logToMonitor(payload);
+  }
+
+  public request(params: IMonitorRequestLogParams) {
+    const payload = {
+      timestamp: new Date(),
+      ...params
+    };
+    this.logRequestToMonitor(payload);
+  }
+
+  private async logRequestToMonitor(payload: MonitorRequestLogPayload) {
+    await this.sendPayload('write-request-log', payload);
   }
 
   private async logToMonitor(payload: MonitorLogPayload) {
