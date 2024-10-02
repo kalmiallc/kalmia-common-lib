@@ -224,6 +224,9 @@ class AppMonitor {
     static overrideLevel(level) {
         this.logger.setLogLevel(level);
     }
+    static sendRequest(payload) {
+        this.logger.request(payload);
+    }
 }
 exports.AppMonitor = AppMonitor;
 AppMonitor.logger = new monitor_logger_1.MonitorLogger();

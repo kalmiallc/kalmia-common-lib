@@ -9,15 +9,34 @@ export interface IMonitorLogger {
     db?(params: IMonitorLogParams): void;
     cost?(params: IMonitorLogParams): void;
     setLogLevel(ll: MonitorLogType): void;
+    request(payload: IMonitorRequestLogParams): void;
 }
 export interface IMonitorLogParams {
     methodName: string;
     message: string;
     location?: string;
     requestId?: string;
-    userId?: string;
+    userId?: string | number;
     data?: any;
     tags?: string[];
+}
+export interface IMonitorRequestLogParams {
+    status: number;
+    method: string;
+    url: string;
+    requestId?: string;
+    apiName?: string;
+    host?: string;
+    origin?: string;
+    referer?: string;
+    ip?: string;
+    country?: string;
+    endpoint?: string;
+    userAgent?: string;
+    body?: string;
+    responseTime?: number;
+    userId?: string | number;
+    projectId?: string;
 }
 /**
  * AppMonitor is a logging wrapper that uses MonitorLogger to send logs to Kalmia Monitor server via API.
@@ -118,5 +137,6 @@ export declare class AppMonitor {
     }, data?: any, tags?: string[]): void;
     static stringifyObjectForLog(data: any, depth?: number, showHidden?: boolean): string;
     static overrideLevel(level: MonitorLogType): void;
+    static sendRequest(payload: IMonitorRequestLogParams): void;
 }
 //# sourceMappingURL=app-monitor.d.ts.map

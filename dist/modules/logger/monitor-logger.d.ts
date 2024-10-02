@@ -1,4 +1,4 @@
-import { IMonitorLogParams } from './app-monitor';
+import { IMonitorLogParams, IMonitorRequestLogParams } from './app-monitor';
 export declare enum MonitorLogType {
     DB = "DB",
     INFO = "INFO",
@@ -16,10 +16,29 @@ export interface MonitorLogPayload {
     message: string;
     location?: string;
     requestId?: string;
-    userId?: string;
+    userId?: string | number;
     data?: any;
     timestamp?: Date;
     tags?: string[];
+}
+export interface MonitorRequestLogPayload {
+    status: number;
+    method: string;
+    url: string;
+    requestId?: string;
+    apiName?: string;
+    host?: string;
+    origin?: string;
+    referer?: string;
+    ip?: string;
+    country?: string;
+    endpoint?: string;
+    userAgent?: string;
+    body?: string;
+    responseTime?: number;
+    userId?: string | number;
+    projectId?: string;
+    timestamp?: Date;
 }
 /**
  * Monitoring logger. This logger uses common logging methods with addition to test and db methods.
@@ -53,6 +72,8 @@ export declare class MonitorLogger {
     error(params: IMonitorLogParams): void;
     test(params: IMonitorLogParams): void;
     db(params: IMonitorLogParams): void;
+    request(params: IMonitorRequestLogParams): void;
+    private logRequestToMonitor;
     private logToMonitor;
     private sendPayload;
 }

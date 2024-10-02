@@ -175,6 +175,13 @@ class MonitorLogger {
         const payload = Object.assign({ logType: MonitorLogType.DB, timestamp: new Date() }, params);
         this.logToMonitor(payload);
     }
+    request(params) {
+        const payload = Object.assign({ timestamp: new Date() }, params);
+        this.logRequestToMonitor(payload);
+    }
+    async logRequestToMonitor(payload) {
+        await this.sendPayload('write-request-log', payload);
+    }
     async logToMonitor(payload) {
         if (!allowLog(payload.logType, this.logLevel)) {
             return;
